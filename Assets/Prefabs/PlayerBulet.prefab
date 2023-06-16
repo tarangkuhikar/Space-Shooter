@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: -5248060912334887992}
   - component: {fileID: 3865557343102547228}
   m_Layer: 0
-  m_Name: Bullet
-  m_TagString: Bullet
+  m_Name: PlayerBulet
+  m_TagString: PlayerBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26,14 +26,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 598120817867189385}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.020600319, y: -0.004, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0.021, y: -0.147, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!212 &8654629192910543307
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -98,7 +98,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0310dacd53e4a8a499a08070e1d06ca4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet_speed: 0.1
+  bullet_speed: 5
+  bullet_index: 10
 --- !u!61 &3865557343102547228
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -109,7 +110,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
