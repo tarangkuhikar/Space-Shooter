@@ -48,5 +48,6 @@ public class Bullet : MonoBehaviour
     private void OnBecameInvisible()
     {
         StopAllCoroutines();
+        BulletPool.Release(this);
     }
 }
