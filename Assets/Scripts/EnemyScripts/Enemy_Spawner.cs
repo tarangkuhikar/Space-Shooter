@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy_Spawner : MonoBehaviour
@@ -22,5 +21,10 @@ public class Enemy_Spawner : MonoBehaviour
             Instantiate(Enemy,new Vector3(Random.Range(-7,7),5), Quaternion.identity);
             yield return new WaitForSecondsRealtime(spawn_speed);
         }
+    }
+
+    private void OnDisable()
+    {
+        StopCoroutine(Spawn_enemies());
     }
 }

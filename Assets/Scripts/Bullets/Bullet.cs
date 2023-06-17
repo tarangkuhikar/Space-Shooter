@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -9,45 +8,51 @@ public class Bullet : MonoBehaviour
     [SerializeField]
     float bullet_speed;
     [SerializeField]
-    int bullet_index=5;
+    int bullet_index = 5;
 
     // Update is called once per frame
     void OnEnable()
     {
         bullet_image = gameObject.GetComponent<SpriteRenderer>();
-        StartCoroutine(Bullet_animation());
     }
 
     private void Update()
     {
-        gameObject.transform.position += new Vector3(0, bullet_speed * Time.deltaTime);
-
+        gameObject.transform.position += bullet_speed * Time.deltaTime * gameObject.transform.right;
     }
 
-
-
-    public IEnumerator Bullet_animation()
+    public IEnumerator BulletAnimation()
     {
-        int index = bullet_index;
-        Debug.Log(index);
         while (true)
         {
             for (int i = 0; i < 4; i++)
             {
-                bullet_image.sprite = Bullet_Sprite.GetSprite(index + i);
+                bullet_image.sprite = Bullet_Sprite.GetSprite(4 * (bullet_index - 1) + 5 * (int)(Mathf.Ceil(bullet_index / 7)) + 1 + i);
+
                 yield return new WaitForSecondsRealtime(0.1f);
             }
         }
     }
 
-    public void BulletIndexChanged(int i)
+    internal void StartAnimation()
     {
-        bullet_index = i;       
+        StartCoroutine(BulletAnimation());
     }
 
-    private void OnBecameInvisible()
+    public void BulletIndexChanged(int i)
     {
-        StopAllCoroutines();
+        bullet_index = i;
+    }
+
+    public void OnDisable()
+    {
+        StopCoroutine(BulletAnimation());
         BulletPool.Release(this);
+
+    }
+
+    public void OnBecameInvisible()
+    {
+        gameObject.SetActive(false);
     }
 }

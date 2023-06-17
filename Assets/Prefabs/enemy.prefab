@@ -278,7 +278,6 @@ MonoBehaviour:
   - {fileID: 1151604697438210933}
   - {fileID: 4485522251654316603}
   enemyspeed: -0.5
-  bullet_index: 5
   timetoshoot: 2
 --- !u!61 &6617348625890162638
 BoxCollider2D:
@@ -340,7 +339,7 @@ GameObject:
   - component: {fileID: 1151604697438210933}
   m_Layer: 0
   m_Name: Left_fire
-  m_TagString: Untagged
+  m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -425,7 +424,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet_prefab: {fileID: -5248060912334887992, guid: 6ebce9a00af0d2149b31f00e43f7cf8b, type: 3}
-  bullet_index: 5
 --- !u!1 &4310237325174091985
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,7 +650,7 @@ GameObject:
   - component: {fileID: 4485522251654316603}
   m_Layer: 0
   m_Name: Right_fire
-  m_TagString: Untagged
+  m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -737,4 +735,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet_prefab: {fileID: -5248060912334887992, guid: 6ebce9a00af0d2149b31f00e43f7cf8b, type: 3}
-  bullet_index: 5
