@@ -18,6 +18,8 @@ public class Enemy_Behaviour : MonoBehaviour
     [SerializeField]
     float timetoshoot = 5;
 
+    public static float score;
+
     private void Start()
     {
         enemyhealth.OnHealthOver += Enemyhealth_OnHealthOver;
@@ -32,6 +34,7 @@ public class Enemy_Behaviour : MonoBehaviour
     private void Enemyhealth_OnHealthOver(object sender, System.EventArgs e)
     {
         Destroy(gameObject);
+        score++;
     }
 
     void Update()

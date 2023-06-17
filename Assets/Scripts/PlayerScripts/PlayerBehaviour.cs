@@ -41,6 +41,7 @@ public class PlayerBehaviour : MonoBehaviour
         Destroy(gameObject);
         Debug.Log("game over");
         PlayerDied?.Invoke();
+        playerhealth.Heal(100);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
