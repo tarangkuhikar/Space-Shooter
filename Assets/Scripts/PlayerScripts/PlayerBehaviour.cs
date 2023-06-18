@@ -12,6 +12,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     public static event Action PlayerDied; 
 
+    private int playerDeath=0;
     private void Start()
     {
         healthBar.Setup(playerhealth);
@@ -38,8 +39,8 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void Playerhealth_OnHealthOver(object sender, System.EventArgs e)
     {
-        Destroy(gameObject);
-        Debug.Log("game over");
+        playerDeath += 1;
+        Debug.Log(playerDeath);
         PlayerDied?.Invoke();
         playerhealth.Heal(100);
     }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class Enemy_Behaviour : MonoBehaviour
 {
@@ -18,14 +19,14 @@ public class Enemy_Behaviour : MonoBehaviour
     [SerializeField]
     float timetoshoot = 5;
 
-    public static float score;
-
+    int score=1;
+    public static event Action<int> ScoreChanged;
     private void Start()
     {
         enemyhealth.OnHealthOver += Enemyhealth_OnHealthOver;
         HealthBar.Setup(enemyhealth);
 
-        bullet_index = Random.Range(2, 64);
+        bullet_index = UnityEngine.Random.Range(2, 64);
 
         enemyGun[0].Changebullet(bullet_index);
         enemyGun[1].Changebullet(bullet_index);
@@ -34,7 +35,8 @@ public class Enemy_Behaviour : MonoBehaviour
     private void Enemyhealth_OnHealthOver(object sender, System.EventArgs e)
     {
         Destroy(gameObject);
-        score++;
+        
+        ScoreChanged(score);
     }
 
     void Update()
