@@ -8,7 +8,7 @@ public class Spaceship_controller : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField]
-    float Spaceship_speed;
+    PlayerData playerdata;
     Rigidbody2D Spaceship;
     Rect cameraRect;
     
@@ -30,8 +30,8 @@ public class Spaceship_controller : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Spaceship.AddForce(new Vector2(Input.GetAxis("Horizontal") * Spaceship_speed, 0));
-        Spaceship.AddForce(new Vector2(0, Input.GetAxis("Vertical") * Spaceship_speed));
+        Spaceship.AddForce(new Vector2(Input.GetAxis("Horizontal") * playerdata.speed, 0));
+        Spaceship.AddForce(new Vector2(0, Input.GetAxis("Vertical") * playerdata.speed));
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, cameraRect.xMin, cameraRect.xMax), Mathf.Clamp(transform.position.y, cameraRect.yMin,cameraRect.yMax),transform.position.z);
         
     }

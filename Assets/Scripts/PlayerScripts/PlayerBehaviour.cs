@@ -2,23 +2,26 @@
 using System;
 
 public class PlayerBehaviour : MonoBehaviour
-{
+{   [SerializeField]
+    PlayerData playerdata;
     [SerializeField]
     private HealthBar healthBar;
     HealthSystem playerhealth = new HealthSystem(100);
     [SerializeField]
     GunScript[] Playergun;
-    int bulletindex;
 
-    public static event Action PlayerDied; 
+    public static event Action PlayerDied;
 
-    private int playerDeath=0;
+    private int playerDeath = 0;
+    [SerializeField]
+    PlayerBullet p;
     private void Start()
     {
         healthBar.Setup(playerhealth);
         playerhealth.OnHealthOver += Playerhealth_OnHealthOver;
-        Playergun[0].Changebullet(3);
-        Playergun[1].Changebullet(3);
+        Playergun[0].Changebullet(playerdata.Bullet);
+        Playergun[1].Changebullet(playerdata.Bullet);
+        p.BulletSprite(Bullet_Sprite.GetSprite(1 + 4 * (playerdata.Bullet - 1) + 5 * (int)Mathf.Ceil(playerdata.Bullet / 7)));
     }
 
     public void Update()
@@ -30,9 +33,10 @@ public class PlayerBehaviour : MonoBehaviour
         }
         if (Input.GetButtonDown("Fire2"))
         {
-            bulletindex = UnityEngine.Random.Range(2, 64);
-            Playergun[0].Changebullet(bulletindex);
-            Playergun[1].Changebullet(bulletindex);
+            playerdata.Bullet = UnityEngine.Random.Range(2, 64);
+            Playergun[0].Changebullet(playerdata.Bullet);
+            Playergun[1].Changebullet(playerdata.Bullet);
+            p.BulletSprite(Bullet_Sprite.GetSprite(1 + 4 * (playerdata.Bullet - 1) + 5 * (int)Mathf.Ceil(playerdata.Bullet / 7)));
 
         }
     }
@@ -42,7 +46,6 @@ public class PlayerBehaviour : MonoBehaviour
         playerDeath += 1;
         Debug.Log(playerDeath);
         PlayerDied?.Invoke();
-        playerhealth.Heal(100);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

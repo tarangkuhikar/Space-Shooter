@@ -34,7 +34,7 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    internal void StartAnimation()
+    public void StartAnimation()
     {
         StartCoroutine(BulletAnimation());
     }

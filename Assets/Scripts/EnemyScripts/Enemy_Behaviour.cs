@@ -3,6 +3,9 @@ using System;
 
 public class Enemy_Behaviour : MonoBehaviour
 {
+    [SerializeField]
+    EnemyData enemydata;
+
     HealthSystem enemyhealth = new HealthSystem(20);
     [SerializeField]
     private EnemyHealthbar HealthBar;
@@ -10,40 +13,32 @@ public class Enemy_Behaviour : MonoBehaviour
     [SerializeField]
     GunScript[] enemyGun;
 
-    [SerializeField]
-    float enemyspeed;
-    int bullet_index;
-
     float t = 0;
-
-    [SerializeField]
-    float timetoshoot = 5;
-
-    int score=1;
+    int index;
     public static event Action<int> ScoreChanged;
     private void Start()
     {
         enemyhealth.OnHealthOver += Enemyhealth_OnHealthOver;
         HealthBar.Setup(enemyhealth);
 
-        bullet_index = UnityEngine.Random.Range(2, 64);
+        index= UnityEngine.Random.Range(2, 64);
 
-        enemyGun[0].Changebullet(bullet_index);
-        enemyGun[1].Changebullet(bullet_index);
+        enemyGun[0].Changebullet(index);
+        enemyGun[1].Changebullet(index);
     }
 
     private void Enemyhealth_OnHealthOver(object sender, System.EventArgs e)
     {
         Destroy(gameObject);
         
-        ScoreChanged(score);
+        ScoreChanged(enemydata.Experience);
     }
 
     void Update()
     {
         t += Time.deltaTime;
-        transform.position += new Vector3(0, enemyspeed * Time.deltaTime, 0);
-        if (t > timetoshoot)
+        transform.position += new Vector3(0, enemydata.speed* Time.deltaTime, 0);
+        if (t > enemydata.FireSpeed)
         {
             enemyGun[0].Fire();
             enemyGun[1].Fire();

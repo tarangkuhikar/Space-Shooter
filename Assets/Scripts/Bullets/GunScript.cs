@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.Pool;
-using System.Collections.Generic;
 
 public class GunScript : MonoBehaviour
 {
@@ -12,6 +10,7 @@ public class GunScript : MonoBehaviour
     {
         bullet_prefab = BulletPool.Get();
 
+        Debug.Log(bullet_prefab.name);
         bullet_prefab.transform.position = gameObject.transform.position;
         bullet_prefab.transform.right = gameObject.transform.up;
 
@@ -26,5 +25,4 @@ public class GunScript : MonoBehaviour
     {
         bullet_index = i;
     }
-
 }

@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 6617348625890162638}
   - component: {fileID: -742158799556355951}
   m_Layer: 0
-  m_Name: enemy
+  m_Name: enemy 1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -273,12 +273,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 359078ed2cdb6cc4494323924165deb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemydata: {fileID: 11400000, guid: 46caacff058b8584ba2fbc5402784952, type: 2}
   HealthBar: {fileID: 5284637620976034992}
   enemyGun:
   - {fileID: 1151604697438210933}
   - {fileID: 4485522251654316603}
-  enemyspeed: -0.5
-  timetoshoot: 2
 --- !u!61 &6617348625890162638
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -634,7 +633,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6807885197506240914}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fbc09c2b20ab8d4eb9b52757a59d502, type: 3}
+  m_Script: {fileID: 11500000, guid: fe3b2d179f0e2fa4fb58dbfedd8b38b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8278009192660742142
