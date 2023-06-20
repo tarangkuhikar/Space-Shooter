@@ -7,7 +7,6 @@ public class Bullet : MonoBehaviour
 
     [SerializeField]
     float bullet_speed;
-    [SerializeField]
     int bullet_index = 5;
 
     // Update is called once per frame

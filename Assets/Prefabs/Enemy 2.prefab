@@ -332,7 +332,6 @@ MonoBehaviour:
   index: 2
   firerate: 8
   stoppos: -2
-  waittime: 8
   IsFiring: 0
 --- !u!1 &159771122709361294
 GameObject:

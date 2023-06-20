@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Enemy1
   m_EditorClassIdentifier: 
   speed: -1.5
-  FireSpeed: 8
+  FireSpeed: 1
   Experience: 5

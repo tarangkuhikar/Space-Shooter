@@ -24,8 +24,6 @@ public class Enemy2Behaviour : MonoBehaviour
     [SerializeField]
     float stoppos;
     [SerializeField]
-    private float waittime;
-    [SerializeField]
     bool IsFiring = false;
 
     private void Start()
@@ -54,27 +52,16 @@ public class Enemy2Behaviour : MonoBehaviour
         }
         if (IsFiring == false)
         {
-            if (t > waittime)
+            if (t > enemydata.FireSpeed)
             {
-                startfiring();
+                int x = UnityEngine.Random.Range(0, 4);
+                enemyGun[x].InvokeRepeating("Fire", 2, 2);
             }
         }
         else
         {
             t = 0;
         }
-    }
-
-    async void startfiring()
-    {
-        IsFiring = true;
-        for (int i = 0; i < firerate; i++)
-        {
-            enemyGun[0].Fire();
-            Debug.Log("bullet fires");
-            await Task.Delay(2000);
-        }
-        IsFiring = false;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

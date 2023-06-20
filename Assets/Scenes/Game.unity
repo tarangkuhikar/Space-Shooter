@@ -152,7 +152,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4193583667243190, guid: 401d8aca9e846254890399f66cd7de66, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4193583667243190, guid: 401d8aca9e846254890399f66cd7de66, type: 3}
       propertyPath: m_LocalScale.x
@@ -393,8 +393,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67e8d4bbe4df2bf43877c88f282db2b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemy: {fileID: 1988959072326566, guid: 8201d0c216c87f246820f9fed4dc370f, type: 3}
-  spawn_speed: 100000
+  Enemy: {fileID: 1988959072326566, guid: 254b4127df6418045a39ce19a1bd2340, type: 3}
+  spawn_speed: 10
 --- !u!4 &260465258
 Transform:
   m_ObjectHideFlags: 0
@@ -1432,7 +1432,7 @@ RectTransform:
   - {fileID: 75047637}
   - {fileID: 574799692}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
