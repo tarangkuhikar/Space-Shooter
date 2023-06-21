@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class GunScript : MonoBehaviour
@@ -6,16 +5,18 @@ public class GunScript : MonoBehaviour
     [SerializeField]
     Bullet bullet_prefab;
     int bullet_index;
-
+    [SerializeField]
+    float BulletSpeed=1;
+    
     public void Fire()
     {
         bullet_prefab = BulletPool.Get();
-        bullet_prefab.transform.position = gameObject.transform.position;
-        bullet_prefab.transform.right = gameObject.transform.up;
 
-        bullet_prefab.BulletIndexChanged(bullet_index);
+        bullet_prefab.transform.SetPositionAndRotation(gameObject.transform.position, gameObject.transform.rotation);
+        bullet_prefab.Setbulletspeed(BulletSpeed);
+
         bullet_prefab.tag = gameObject.tag;
-        bullet_prefab.StartAnimation();
+        bullet_prefab.StartAnimation(bullet_index);
     }
 
     public void Changebullet(int i)
@@ -25,6 +26,6 @@ public class GunScript : MonoBehaviour
 
     public void SetSpeed(float bulletSpeed)
     {
-        bullet_prefab.bulletspeed(bulletSpeed);    
+        BulletSpeed = bulletSpeed;    
     }
 }

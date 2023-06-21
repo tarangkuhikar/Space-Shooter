@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerData :ScriptableObject
 {
     public int Health;
+    public float Speed;
     public int Bullet;
-    public float speed;
-
+    public float BulletSpeed;
 }

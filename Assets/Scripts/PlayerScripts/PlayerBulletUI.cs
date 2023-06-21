@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-public class PlayerBullet : MonoBehaviour
+public class PlayerBulletUI : MonoBehaviour
 {
     Image image;
     // Start is called before the first frame update
