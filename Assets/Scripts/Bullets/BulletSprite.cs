@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Bullet_Sprite : MonoBehaviour
+public class BulletSprite : MonoBehaviour
 {
     static Sprite[] bullet_sprite;
     public void Awake()

@@ -4,51 +4,64 @@ using TMPro;
 public class PlayerBehaviour : MonoBehaviour
 {   [SerializeField]
     PlayerData playerdata;
+
     [SerializeField]
     private HealthBar healthBar;
-    HealthSystem playerhealth = new HealthSystem(100);
+    HealthSystem playerhealth;
+
     [SerializeField]
     GunScript[] Playergun;
 
     public static event Action PlayerDied;
 
     [SerializeField]
-    PlayerBullet p;
+    PlayerBulletUI PlayerBulletUI;
+
     [SerializeField]
     int playerlives=3;
+
     [SerializeField]
     TMP_Text lives;
     private void Start()
     {
+        playerhealth = new HealthSystem(playerdata.Health);
         healthBar.Setup(playerhealth);
         lives.text = playerlives.ToString();
         playerhealth.OnHealthOver += Playerhealth_OnHealthOver;
-        Playergun[0].Changebullet(playerdata.Bullet);
-        Playergun[1].Changebullet(playerdata.Bullet);
-        p.BulletSprite(Bullet_Sprite.GetSprite(playerdata.Bullet*4));
+
+        
+        foreach(GunScript gun in Playergun)
+        {
+            gun.Changebullet(playerdata.Bullet);
+        }
+        PlayerBulletUI.BulletSprite(BulletSprite.GetSprite(playerdata.Bullet*4));
     }
 
     public void Update()
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            Playergun[0].Fire();
-            Playergun[1].Fire();
+            foreach(GunScript guns in Playergun)
+            {
+                guns.Fire();
+            }
         }
+
         if (Input.GetButtonDown("Fire2"))
         {
             playerdata.Bullet = UnityEngine.Random.Range(0,77);
             Playergun[0].Changebullet(playerdata.Bullet);
             Playergun[1].Changebullet(playerdata.Bullet);
-            p.BulletSprite(Bullet_Sprite.GetSprite(playerdata.Bullet*4));
+
+            PlayerBulletUI.BulletSprite(BulletSprite.GetSprite(playerdata.Bullet*4));
 
         }
     }
 
-    private void Playerhealth_OnHealthOver(object sender, System.EventArgs e)
+    private void Playerhealth_OnHealthOver(object sender,EventArgs e)
     {
         playerlives-=1;
-        playerhealth.Heal(100);
+        playerhealth.Heal(playerdata.Health);
         lives.text = playerlives.ToString();
         if (playerlives == 0)
         {
