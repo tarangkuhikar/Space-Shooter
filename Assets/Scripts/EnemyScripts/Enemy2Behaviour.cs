@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Threading.Tasks;
 using UnityEngine;
-
+using System.Collections;
 public class Enemy2Behaviour : MonoBehaviour
 {
     [SerializeField]
@@ -13,7 +12,6 @@ public class Enemy2Behaviour : MonoBehaviour
 
     [SerializeField]
     GunScript[] enemyGun;
-
     float t = 0;
     [SerializeField]
     int index;
@@ -25,7 +23,8 @@ public class Enemy2Behaviour : MonoBehaviour
     float stoppos;
     [SerializeField]
     bool IsFiring = false;
-
+    [SerializeField]
+    float waitime;
     private void Start()
     {
         enemyhealth.OnHealthOver += Enemyhealth_OnHealthOver;
@@ -52,10 +51,11 @@ public class Enemy2Behaviour : MonoBehaviour
         }
         if (IsFiring == false)
         {
-            if (t > enemydata.FireSpeed)
+            vulnerable = false;
+            if (t >= waitime)
             {
                 int x = UnityEngine.Random.Range(0, 4);
-                enemyGun[x].InvokeRepeating("Fire", 2, 2);
+                StartCoroutine(Startfiring(x));
             }
         }
         else
@@ -64,18 +64,45 @@ public class Enemy2Behaviour : MonoBehaviour
         }
     }
 
+    IEnumerator Startfiring(int x)
+    {
+        IsFiring = true;
+        vulnerable = true;
+        for (int i = 0; i < firerate; i++)
+        {
+            Debug.Log("firing");
+            enemyGun[x].Fire();
+            Debug.Log("fired");
+            yield return new WaitForSeconds(enemydata.FireSpeed);
+        }
+        IsFiring = false;
+        vulnerable = false;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.transform.CompareTag("PlayerBullet") && vulnerable == true)
+        if (other.transform.CompareTag("PlayerBullet"))
         {
-            enemyhealth.Damage(10);
-            other.gameObject.SetActive(false);
+            if (vulnerable == true)
+            {
+                enemyhealth.Damage(10);
+                other.gameObject.SetActive(false);
+            }
+            else
+            {
+                other.gameObject.SetActive(false);
+            }
         }
-        other.gameObject.SetActive(false);
+
+        waitime *= enemyhealth.GetHealthPercentage();
     }
     private void OnBecameInvisible()
     {
         Destroy(gameObject);
         StopAllCoroutines();
+    }
+    public void OnDestroy()
+    {
+        enemyhealth.OnHealthOver -= Enemyhealth_OnHealthOver;
     }
 }

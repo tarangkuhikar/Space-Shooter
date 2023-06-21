@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class GunScript : MonoBehaviour
@@ -20,5 +21,10 @@ public class GunScript : MonoBehaviour
     public void Changebullet(int i)
     {
         bullet_index = i;
+    }
+
+    public void SetSpeed(float bulletSpeed)
+    {
+        bullet_prefab.bulletspeed(bulletSpeed);    
     }
 }

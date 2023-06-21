@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   Health: 100
-  Bullet: 52
-  speed: 20
+  Bullet: 42
+  speed: 30

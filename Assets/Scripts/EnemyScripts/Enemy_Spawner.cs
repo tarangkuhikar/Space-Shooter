@@ -5,22 +5,25 @@ public class Enemy_Spawner : MonoBehaviour
 {
 
     [SerializeField]
-    GameObject Enemy;
+    GameObject[] Enemy;
     [SerializeField]
     float spawn_speed;
+    Coroutine spawn;
     // Start is called before the first frame update
     private void OnEnable()
     {
-        StartCoroutine(Spawn_enemies());
+        spawn=StartCoroutine(Spawn_enemies());
     }
 
     IEnumerator Spawn_enemies()
     {
-        while (true)
+        for (int i = 0; i < 10; i++)
         {
-            Instantiate(Enemy,new Vector3(Random.Range(-7,7),5), Quaternion.identity);
+            Instantiate(Enemy[0], new Vector3(Random.Range(-7, 7), 5), Quaternion.identity);
             yield return new WaitForSecondsRealtime(spawn_speed);
         }
+        Instantiate(Enemy[1], new Vector3(0, 5), Quaternion.identity);
+        StopCoroutine(spawn);
     }
 
     private void OnDisable()

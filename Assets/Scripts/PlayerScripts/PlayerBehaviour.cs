@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System;
-
+using TMPro;
 public class PlayerBehaviour : MonoBehaviour
 {   [SerializeField]
     PlayerData playerdata;
@@ -12,16 +12,20 @@ public class PlayerBehaviour : MonoBehaviour
 
     public static event Action PlayerDied;
 
-    private int playerDeath = 0;
     [SerializeField]
     PlayerBullet p;
+    [SerializeField]
+    int playerlives=3;
+    [SerializeField]
+    TMP_Text lives;
     private void Start()
     {
         healthBar.Setup(playerhealth);
+        lives.text = playerlives.ToString();
         playerhealth.OnHealthOver += Playerhealth_OnHealthOver;
         Playergun[0].Changebullet(playerdata.Bullet);
         Playergun[1].Changebullet(playerdata.Bullet);
-        p.BulletSprite(Bullet_Sprite.GetSprite(1 + 4 * (playerdata.Bullet - 1) + 5 * (int)Mathf.Ceil(playerdata.Bullet / 7)));
+        p.BulletSprite(Bullet_Sprite.GetSprite(playerdata.Bullet*4));
     }
 
     public void Update()
@@ -33,18 +37,23 @@ public class PlayerBehaviour : MonoBehaviour
         }
         if (Input.GetButtonDown("Fire2"))
         {
-            playerdata.Bullet = UnityEngine.Random.Range(2, 64);
+            playerdata.Bullet = UnityEngine.Random.Range(0,77);
             Playergun[0].Changebullet(playerdata.Bullet);
             Playergun[1].Changebullet(playerdata.Bullet);
-            p.BulletSprite(Bullet_Sprite.GetSprite(1 + 4 * (playerdata.Bullet - 1) + 5 * (int)Mathf.Ceil(playerdata.Bullet / 7)));
+            p.BulletSprite(Bullet_Sprite.GetSprite(playerdata.Bullet*4));
 
         }
     }
 
     private void Playerhealth_OnHealthOver(object sender, System.EventArgs e)
     {
-        playerDeath += 1;
-        Debug.Log(playerDeath);
+        playerlives-=1;
+        playerhealth.Heal(100);
+        lives.text = playerlives.ToString();
+        if (playerlives == 0)
+        {
+            Destroy(gameObject);
+        }       
         PlayerDied?.Invoke();
     }
 

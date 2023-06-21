@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: EnemyData2
   m_EditorClassIdentifier: 
   speed: -0.3
-  FireSpeed: 5
+  FireSpeed: 1
   Experience: 100

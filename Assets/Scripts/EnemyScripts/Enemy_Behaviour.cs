@@ -12,32 +12,39 @@ public class Enemy_Behaviour : MonoBehaviour
 
     [SerializeField]
     GunScript[] enemyGun;
-
     float t = 0;
     int index;
+    [SerializeField]
+    float stoppos = 2;
+    [SerializeField]
+    float BulletSpeed;
     public static event Action<int> ScoreChanged;
     private void Start()
     {
         enemyhealth.OnHealthOver += Enemyhealth_OnHealthOver;
         HealthBar.Setup(enemyhealth);
+        index = UnityEngine.Random.Range(0, 77);
 
-        index= UnityEngine.Random.Range(2, 64);
-
-        enemyGun[0].Changebullet(index);
-        enemyGun[1].Changebullet(index);
+        foreach (GunScript gun in enemyGun)
+        {
+            gun.SetSpeed(BulletSpeed);
+            gun.Changebullet(index);
+        }
     }
 
-    private void Enemyhealth_OnHealthOver(object sender, System.EventArgs e)
+    public void Enemyhealth_OnHealthOver(object sender, System.EventArgs e)
     {
         Destroy(gameObject);
-        
-        ScoreChanged(enemydata.Experience);
+        ScoreChanged?.Invoke(enemydata.Experience);
     }
 
-    void Update()
+    public void Update()
     {
         t += Time.deltaTime;
-        transform.position += new Vector3(0, enemydata.speed* Time.deltaTime, 0);
+        if (transform.position.y >= stoppos)
+        {
+            transform.position += new Vector3(0, enemydata.speed * Time.deltaTime, 0);
+        }
         if (t > enemydata.FireSpeed)
         {
             enemyGun[0].Fire();
@@ -46,7 +53,7 @@ public class Enemy_Behaviour : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.transform.CompareTag("PlayerBullet"))
         {
@@ -54,9 +61,12 @@ public class Enemy_Behaviour : MonoBehaviour
             other.gameObject.SetActive(false);
         }
     }
-    private void OnBecameInvisible()
+    public void OnBecameInvisible()
     {
         Destroy(gameObject);
-        StopAllCoroutines();
+    }
+    public void OnDisable()
+    {
+        Destroy(gameObject);
     }
 }

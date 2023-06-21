@@ -10,6 +10,7 @@ public class ScoreScript : MonoBehaviour
     {
         ScoreText = GetComponent<TMP_Text>();
         Enemy_Behaviour.ScoreChanged += Enemy_Behaviour_ScoreChanged;
+        Enemy2Behaviour.ScoreChanged += Enemy_Behaviour_ScoreChanged;
     }
 
     private void Enemy_Behaviour_ScoreChanged(int x)
