@@ -12,8 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 496e2954428d2304faf9c47d9220d2f1, type: 3}
   m_Name: Enemy1Data
   m_EditorClassIdentifier: 
-  Health: 0
-  Speed: 0
-  BulletIndex: 0
-  BulletSpeed: 0
-  Experience: 0
+  BulletSpeed: 5
+  BulletIndex: 42
+  Experience: 10

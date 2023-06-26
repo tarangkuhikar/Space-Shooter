@@ -8,25 +8,21 @@ public class Bullet : MonoBehaviour
     int bullet_index = 5;
 
     // Update is called once per frame
-    void OnEnable()
+    private void OnEnable()
     {
         bullet_image = gameObject.GetComponent<SpriteRenderer>();
     }
 
-    public  void StartAnimation(int bulletindex)
-    {
-        bullet_index = bulletindex;
-        StartCoroutine(BulletAnimation());
-    }
-
     private void Update()
     {
-        gameObject.transform.position += BulletSpeed*Time.deltaTime*gameObject.transform.up;
+        gameObject.transform.position += BulletSpeed * Time.deltaTime * gameObject.transform.right;
     }
 
-    public void Setbulletspeed(float bulletSpeed)
+    public void FireBullet(float bulletSpeed, int bulletindex)
     {
         BulletSpeed = bulletSpeed;
+        bullet_index = bulletindex;
+        StartCoroutine(BulletAnimation());
     }
 
     private IEnumerator BulletAnimation()
@@ -35,25 +31,25 @@ public class Bullet : MonoBehaviour
         {
             for (int i = 0; i < 4; i++)
             {
-                bullet_image.sprite = BulletSprite.GetSprite(bullet_index*4+i);
+                bullet_image.sprite = BulletSprite.GetSprite(bullet_index * 4 + i);
                 yield return new WaitForSeconds(0.1f);
             }
         }
     }
 
 
-    public void OnDisable()
+    private void OnDisable()
     {
         BulletPool.Release(this);
         StopAllCoroutines();
     }
 
-    public void OnApplicationQuit()
+    private void OnApplicationQuit()
     {
         Destroy(gameObject);
     }
 
-    public void OnBecameInvisible()
+    private void OnBecameInvisible()
     {
         gameObject.SetActive(false);
     }

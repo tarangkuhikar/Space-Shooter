@@ -11,8 +11,8 @@ public class InfineiteBackground : MonoBehaviour
         background = GetComponent<RawImage>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        background.uvRect = new Rect(background.uvRect.position + new Vector2(0, movespeed) * Time.deltaTime, background.uvRect.size);
+        background.uvRect = new Rect(background.uvRect.position + new Vector2(0, movespeed) , background.uvRect.size);
     }
 }

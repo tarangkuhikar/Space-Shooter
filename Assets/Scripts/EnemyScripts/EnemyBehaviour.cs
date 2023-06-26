@@ -1,40 +1,51 @@
 using UnityEngine;
+using System.Collections;
+using DG.Tweening;
 
 public class EnemyBehaviour : MonoBehaviour
 {
     [SerializeField]
     EnemyData EnemyData;
-    [SerializeField]
-    HealthSystem enemyhealth;
-    [SerializeField]
-    EnemyHealthbar enemyhealthbar;
-    [SerializeField]
-    float stoppos = 1;
+
     [SerializeField]
     GunScript[] guns;
-    private void Start()
+
+    Transform player;
+    Vector3[] path;
+    float shoottime;
+    private void start()
     {
-        
-        enemyhealth = new HealthSystem(EnemyData.Health);
-        enemyhealth.OnHealthOver += Enemyhealth_OnHealthOver;
-        enemyhealthbar.Setup(enemyhealth);
-        foreach(GunScript gun in guns){
-            gun.Changebullet(EnemyData.BulletIndex);
-        }
-        gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, EnemyData.Speed);
+        PlayerBehaviour.PlayerDied += PlayerBehaviour_PlayerDied;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        transform.DOPath(path, 3+0.5f*shoottime, PathType.CatmullRom, PathMode.TopDown2D, 10, Color.green).SetEase(Ease.Linear);
+        StartCoroutine(FirePattern());
     }
 
-    private void Enemyhealth_OnHealthOver(object sender, System.EventArgs e)
+    public void SetPath(Vector3[] setpath,int index)
     {
-        Destroy(gameObject);
-        ScoreScript.ScoreChanged(EnemyData.Experience);
+        shoottime = index;
+        path = setpath;
+        start();
+    }
+    private void PlayerBehaviour_PlayerDied()
+    {
+        StopAllCoroutines();
     }
 
-    private void Update()
+    IEnumerator FirePattern()
     {
-        if (gameObject.transform.position.y <= stoppos)
+        float shoot = Random.value;
+        while (true)
         {
-            gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
+            if (shoot < 0.25)
+            {
+                foreach (GunScript gun in guns)
+                {
+                    gun.transform.up = player.transform.position - gun.transform.position;
+                    gun.Fire(EnemyData.BulletSpeed, EnemyData.BulletIndex);
+                }
+                yield return new WaitForSecondsRealtime(3);
+            }
         }
     }
 
@@ -42,9 +53,15 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (collision.CompareTag("PlayerBullet"))
         {
-            enemyhealth.Damage(EnemyData.TakeDamage);
+            Destroy(gameObject);
+            ScoreScript.ScoreChanged(EnemyData.Experience);
             collision.gameObject.SetActive(false);
         }
     }
 
+    private void OnDestroy()
+    {
+        PlayerBehaviour.PlayerDied -= PlayerBehaviour_PlayerDied;
+        DOTween.KillAll();
+    }
 }

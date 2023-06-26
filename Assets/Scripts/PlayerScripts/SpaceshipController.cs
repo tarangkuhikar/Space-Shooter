@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -9,30 +7,31 @@ public class SpaceshipController : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField]
     PlayerData playerdata;
+
     Rigidbody2D Spaceship;
-    Rect cameraRect;
-    
+    //Rect cameraRect;
+
+    Vector3 screenBounds;
+    float objectWidth, objectHeight;
     void OnEnable()
     {
-        Camera camera= Camera.main;
+        screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height,Camera.main.transform.position.z));
+        objectWidth = transform.GetComponent<SpriteRenderer>().bounds.extents.x; 
+        objectHeight = transform.GetComponent<SpriteRenderer>().bounds.extents.y;
         Spaceship = GetComponent<Rigidbody2D>();
-        var bottomLeft = camera.ScreenToWorldPoint(Vector3.zero);
-        var topRight = camera.ScreenToWorldPoint(new Vector3(
-            camera.pixelWidth, camera.pixelHeight));
-
-        cameraRect = new Rect(
-            bottomLeft.x,
-            bottomLeft.y,
-            topRight.x - bottomLeft.x,
-            topRight.y - bottomLeft.y);
+       
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         Spaceship.AddForce(new Vector2(Input.GetAxis("Horizontal") * playerdata.Speed, 0));
-        Spaceship.AddForce(new Vector2(0, Input.GetAxis("Vertical") * playerdata.Speed));
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, cameraRect.xMin, cameraRect.xMax), Mathf.Clamp(transform.position.y, cameraRect.yMin,cameraRect.yMax),transform.position.z);
-        
+    }
+
+    private void LateUpdate()
+    {
+        Vector3 viewPos = transform.position;
+        viewPos.x = Mathf.Clamp(viewPos.x, screenBounds.x*-1 + objectWidth, screenBounds.x - objectWidth);
+        viewPos.y = Mathf.Clamp(viewPos.y, screenBounds.y*-1 + objectHeight, screenBounds.y - objectHeight);
+        transform.position = viewPos;
     }
 }

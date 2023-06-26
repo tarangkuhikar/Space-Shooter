@@ -3,7 +3,6 @@ using UnityEngine.UI;
 public class PlayerBulletUI : MonoBehaviour
 {
     Image image;
-    // Start is called before the first frame update
     void Awake()
     {
        image= GetComponent<Image>();

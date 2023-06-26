@@ -4,10 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy
   - EnemyBullet
   - PlayerBullet
+  - MainEnemy
+  - Heal
   - Bullet
+  - Enemy
+  - Shield
   layers:
   - Default
   - TransparentFX
@@ -15,7 +18,7 @@ TagManager:
   - 
   - Water
   - UI
-  - game
+  - 
   - 
   - 
   - 
@@ -42,6 +45,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: background
+    uniqueID: 3411338181
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
