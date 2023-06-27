@@ -12,21 +12,23 @@ public class EnemyBehaviour : MonoBehaviour
 
     Transform player;
     Vector3[] path;
-    float shoottime;
-    private void start()
+    float movetime;
+
+    private void Start()
     {
         PlayerBehaviour.PlayerDied += PlayerBehaviour_PlayerDied;
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        transform.DOPath(path, 3+0.5f*shoottime, PathType.CatmullRom, PathMode.TopDown2D, 10, Color.green).SetEase(Ease.Linear);
+
         StartCoroutine(FirePattern());
     }
 
-    public void SetPath(Vector3[] setpath,int index)
+    public void SetPath(Vector3[] setpath, int i)
     {
-        shoottime = index;
         path = setpath;
-        start();
+        movetime = i;
+        transform.DOPath(path, 5, PathType.CatmullRom, PathMode.TopDown2D, 10, Color.green).SetEase(Ease.Linear);
     }
+
     private void PlayerBehaviour_PlayerDied()
     {
         StopAllCoroutines();
@@ -34,18 +36,19 @@ public class EnemyBehaviour : MonoBehaviour
 
     IEnumerator FirePattern()
     {
-        float shoot = Random.value;
+
         while (true)
         {
-            if (shoot < 0.25)
+            float shoot = Random.value;
+            if (shoot <= 0.50f)
             {
                 foreach (GunScript gun in guns)
                 {
                     gun.transform.up = player.transform.position - gun.transform.position;
                     gun.Fire(EnemyData.BulletSpeed, EnemyData.BulletIndex);
                 }
-                yield return new WaitForSecondsRealtime(3);
             }
+            yield return new WaitForSecondsRealtime(8);
         }
     }
 
@@ -62,6 +65,6 @@ public class EnemyBehaviour : MonoBehaviour
     private void OnDestroy()
     {
         PlayerBehaviour.PlayerDied -= PlayerBehaviour_PlayerDied;
-        DOTween.KillAll();
+        transform.DOKill();
     }
 }

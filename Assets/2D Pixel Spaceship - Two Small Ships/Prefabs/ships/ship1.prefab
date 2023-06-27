@@ -98,7 +98,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet_prefab: {fileID: -5248060912334887992, guid: 08ce9981bc344f74ba738a660388003a, type: 3}
-  BulletSpeed: 3
 --- !u!1 &1206080019
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,7 +196,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet_prefab: {fileID: -5248060912334887992, guid: 08ce9981bc344f74ba738a660388003a, type: 3}
-  BulletSpeed: 3
 --- !u!1 &1400420817260280
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,7 +297,7 @@ GameObject:
   - component: {fileID: 378949359}
   m_Layer: 0
   m_Name: ship1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -420,14 +418,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerdata: {fileID: 11400000, guid: a9672083e2796924e8e329fc6ba7ebc6, type: 2}
-  healthBar: {fileID: 0}
   Playergun:
   - {fileID: 1081100008}
   - {fileID: 1206080023}
   PlayerBulletUI: {fileID: 0}
   playerlives: 3
-  lives: {fileID: 0}
-  AvailableBullets: 41000000
 --- !u!1 &1818141105757828
 GameObject:
   m_ObjectHideFlags: 0
