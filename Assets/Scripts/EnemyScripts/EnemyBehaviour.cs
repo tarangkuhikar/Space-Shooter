@@ -5,29 +5,29 @@ using DG.Tweening;
 public class EnemyBehaviour : MonoBehaviour
 {
     [SerializeField]
-    EnemyData EnemyData;
+    EnemyData _enemyData;
 
     [SerializeField]
-    GunScript[] guns;
+    GunScript[] _guns;
 
-    Transform player;
-    Vector3[] path;
-    float movetime;
+    Vector3[] _path;
 
+    [SerializeField]
+    ParticleSystem _explosion;
     private void Start()
     {
         PlayerBehaviour.PlayerDied += PlayerBehaviour_PlayerDied;
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-
         StartCoroutine(FirePattern());
     }
 
-    public void SetPath(Vector3[] setpath, int i)
+    public void SetPath(Vector3[] setPath)
     {
-        path = setpath;
-        movetime = i;
-        transform.DOPath(path, 5, PathType.CatmullRom, PathMode.TopDown2D, 10, Color.green).SetEase(Ease.Linear);
+        _path = setPath;
+        Sequence s = DOTween.Sequence();
+        s.Append(transform.DOPath(_path, 2, PathType.CatmullRom, PathMode.TopDown2D).SetEase(Ease.Linear).SetLookAt(0.02f, null, -gameObject.transform.right));
+        s.Append(transform.DORotate(Vector3.up, 1).SetEase(Ease.InOutExpo));
     }
+
 
     private void PlayerBehaviour_PlayerDied()
     {
@@ -36,19 +36,18 @@ public class EnemyBehaviour : MonoBehaviour
 
     IEnumerator FirePattern()
     {
-
         while (true)
         {
             float shoot = Random.value;
-            if (shoot <= 0.50f)
+            if (shoot <= 0.25f && gameObject.transform.position.y >= -1)
             {
-                foreach (GunScript gun in guns)
+                foreach (GunScript gun in _guns)
                 {
-                    gun.transform.up = player.transform.position - gun.transform.position;
-                    gun.Fire(EnemyData.BulletSpeed, EnemyData.BulletIndex);
+                    gun.transform.up = GameManager.Player.position - gun.transform.position;
+                    gun.Fire(_enemyData.BulletSpeed, _enemyData.BulletIndex);
                 }
             }
-            yield return new WaitForSecondsRealtime(8);
+            yield return new WaitForSecondsRealtime(5);
         }
     }
 
@@ -56,8 +55,10 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (collision.CompareTag("PlayerBullet"))
         {
+            _explosion=Instantiate(_explosion, gameObject.transform.position, Quaternion.identity);  
+            _explosion.Play();
             Destroy(gameObject);
-            ScoreScript.ScoreChanged(EnemyData.Experience);
+            ScoreScript.ScoreChanged(_enemyData.Experience);
             collision.gameObject.SetActive(false);
         }
     }
@@ -65,6 +66,5 @@ public class EnemyBehaviour : MonoBehaviour
     private void OnDestroy()
     {
         PlayerBehaviour.PlayerDied -= PlayerBehaviour_PlayerDied;
-        transform.DOKill();
     }
 }

@@ -1,13 +1,11 @@
 ﻿using UnityEngine;
-using System.Collections;
-
 public static class EnemySpawnerUsingFiles
 
 {
-    static TextAsset[] LevelData;
-    public static string SpawnEnemies(int Level)
+    static TextAsset[] _levelData;
+    public static string SpawnEnemies(int level)
     {
-        LevelData = Resources.LoadAll<TextAsset>("Levels");
-        return LevelData[Level].text;
+        _levelData = Resources.LoadAll<TextAsset>("Levels");
+        return _levelData[level].text;
     }
 }

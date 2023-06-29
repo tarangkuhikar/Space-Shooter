@@ -6,32 +6,33 @@ public class SpaceshipController : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField]
-    PlayerData playerdata;
+    PlayerData _playerData;
 
-    Rigidbody2D Spaceship;
+    Rigidbody2D _spaceShip;
     //Rect cameraRect;
 
-    Vector3 screenBounds;
-    float objectWidth, objectHeight;
+    Vector3 _screenBounds;
+    Vector3 viewPos;
+    float _objectWidth, _objectHeight;
     void OnEnable()
     {
-        screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height,Camera.main.transform.position.z));
-        objectWidth = transform.GetComponent<SpriteRenderer>().bounds.extents.x; 
-        objectHeight = transform.GetComponent<SpriteRenderer>().bounds.extents.y;
-        Spaceship = GetComponent<Rigidbody2D>();
-       
+        _screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+        _objectWidth = transform.GetComponent<SpriteRenderer>().bounds.extents.x;
+        _objectHeight = transform.GetComponent<SpriteRenderer>().bounds.extents.y;
+        _spaceShip = GetComponent<Rigidbody2D>();
+
     }
 
     void FixedUpdate()
     {
-        Spaceship.AddForce(new Vector2(Input.GetAxis("Horizontal") * playerdata.Speed, 0));
+        _spaceShip.AddForce(Input.GetAxis("Horizontal") * _playerData.Speed * Vector3.right);
     }
 
     private void LateUpdate()
     {
-        Vector3 viewPos = transform.position;
-        viewPos.x = Mathf.Clamp(viewPos.x, screenBounds.x*-1 + objectWidth, screenBounds.x - objectWidth);
-        viewPos.y = Mathf.Clamp(viewPos.y, screenBounds.y*-1 + objectHeight, screenBounds.y - objectHeight);
+        viewPos = transform.position;
+        viewPos.x = Mathf.Clamp(viewPos.x, _screenBounds.x * -1 + _objectWidth, _screenBounds.x - _objectWidth);
+        viewPos.y = Mathf.Clamp(viewPos.y, _screenBounds.y * -1 + _objectHeight, _screenBounds.y - _objectHeight);
         transform.position = viewPos;
     }
 }

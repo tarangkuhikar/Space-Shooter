@@ -15,4 +15,4 @@ MonoBehaviour:
   Speed: 20
   Bullet: 65
   BulletSpeed: 5
-  FireRate: 0.5
+  FireRate: 0.75

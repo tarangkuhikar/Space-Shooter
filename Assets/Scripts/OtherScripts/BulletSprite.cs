@@ -2,14 +2,14 @@
 
 public class BulletSprite : MonoBehaviour
 {
-    static Sprite[] bullet_sprite;
+    static Sprite[] _bulletSprite;
     public void Awake()
     {
-        bullet_sprite = Resources.LoadAll<Sprite>("BulletAssets");
+        _bulletSprite = Resources.LoadAll<Sprite>("BulletAssets");
     }
 
     public static Sprite GetSprite(int index)
     {
-        return bullet_sprite[index];
+        return _bulletSprite[index];
     }
 }

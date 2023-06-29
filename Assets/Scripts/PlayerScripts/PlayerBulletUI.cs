@@ -2,14 +2,14 @@ using UnityEngine;
 using UnityEngine.UI;
 public class PlayerBulletUI : MonoBehaviour
 {
-    Image image;
+    Image _image;
     void Awake()
     {
-       image= GetComponent<Image>();
+       _image= GetComponent<Image>();
     }
 
    public void BulletSprite(Sprite s)
     {
-        image.sprite = s;
+        _image.sprite = s;
     }
 }

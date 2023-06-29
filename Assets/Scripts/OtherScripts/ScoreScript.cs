@@ -3,22 +3,22 @@ using TMPro;
 
 public class ScoreScript : MonoBehaviour
 {
-    static TMP_Text ScoreText;
-    static int Score;
+    static TMP_Text _scoreText;
+    static int _score;
     public void Start()
     {
         PlayerBehaviour.PlayerDied += PlayerBehaviour_PlayerDied;
-        ScoreText = GetComponent<TMP_Text>();
+        _scoreText = GetComponent<TMP_Text>();
     }
 
     private void PlayerBehaviour_PlayerDied()
     {
-        Score = 0;
+        _score = 0;
     }
 
     public static void ScoreChanged(int x)
     {
-        Score += x;
-        ScoreText.text = Score.ToString();
+        _score += x;
+        _scoreText.text = _score.ToString();
     }
 }

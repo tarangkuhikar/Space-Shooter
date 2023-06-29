@@ -10,10 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 496e2954428d2304faf9c47d9220d2f1, type: 3}
-  m_Name: Level1Main
+  m_Name: AsteroidData
   m_EditorClassIdentifier: 
-  Health: 300
-  Speed: -2
-  BulletIndex: 11
-  Experience: 100
-  TakeDamage: 10
+  BulletSpeed: 1
+  BulletIndex: 0
+  Experience: 5

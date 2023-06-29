@@ -7,10 +7,8 @@ TagManager:
   - EnemyBullet
   - PlayerBullet
   - MainEnemy
-  - Heal
-  - Bullet
   - Enemy
-  - Shield
+  - Asteroid
   layers:
   - Default
   - TransparentFX

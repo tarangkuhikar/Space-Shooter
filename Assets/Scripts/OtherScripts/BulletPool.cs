@@ -4,24 +4,25 @@ using UnityEngine.Pool;
 public class BulletPool : MonoBehaviour
 {
     [SerializeField]
-    Bullet bullet_prefab;
+    Bullet _bulletPrefab;
 
-    static ObjectPool<Bullet> bullet_pool;
+    static ObjectPool<Bullet> _bulletPool;
+
     private void Awake()
     {
-        bullet_pool = new ObjectPool<Bullet>(() => Instantiate(bullet_prefab),
+        _bulletPool = new ObjectPool<Bullet>(() => Instantiate(_bulletPrefab),
             bullet => bullet.gameObject.SetActive(true),
             bullet => bullet.gameObject.SetActive(false),
-            bullet => Destroy(gameObject), true, 50, 100);;
+            bullet => Destroy(gameObject), true, 50, 100); 
     }
 
     public static Bullet Get()
     {
-        return bullet_pool.Get();
+        return _bulletPool.Get();
     }
 
     public static void Release(Bullet bullet)
     {
-        bullet_pool.Release(bullet);
+        _bulletPool.Release(bullet);
     }
 }

@@ -3,25 +3,25 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    SpriteRenderer bullet_image;
-    float BulletSpeed;
-    int bullet_index = 5;
+    SpriteRenderer _bulletImage;
+    float _bulletSpeed;
+    int _bulletIndex = 5;
 
     // Update is called once per frame
     private void OnEnable()
     {
-        bullet_image = gameObject.GetComponent<SpriteRenderer>();
+        _bulletImage = gameObject.GetComponent<SpriteRenderer>();
     }
 
     private void Update()
     {
-        gameObject.transform.position += BulletSpeed * Time.deltaTime * gameObject.transform.right;
+        gameObject.transform.position += _bulletSpeed * Time.deltaTime * gameObject.transform.right;
     }
 
     public void FireBullet(float bulletSpeed, int bulletindex)
     {
-        BulletSpeed = bulletSpeed;
-        bullet_index = bulletindex;
+        _bulletSpeed = bulletSpeed;
+        _bulletIndex = bulletindex;
         StartCoroutine(BulletAnimation());
     }
 
@@ -31,7 +31,7 @@ public class Bullet : MonoBehaviour
         {
             for (int i = 0; i < 4; i++)
             {
-                bullet_image.sprite = BulletSprite.GetSprite(bullet_index * 4 + i);
+                _bulletImage.sprite = BulletSprite.GetSprite(_bulletIndex * 4 + i);
                 yield return new WaitForSeconds(0.1f);
             }
         }

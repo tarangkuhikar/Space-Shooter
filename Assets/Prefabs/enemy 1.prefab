@@ -31,7 +31,7 @@ Transform:
   m_Children:
   - {fileID: 8894111887517293436}
   m_Father: {fileID: 4803365131872970}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &212975623519947666
 SpriteRenderer:
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300008, guid: 8aeb9e233fbb8f14db39770841b78b94, type: 3}
   m_Color: {r: 0.7075472, g: 0.3571111, b: 0.3571111, a: 0.5019608}
   m_FlipX: 0
@@ -115,7 +115,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4803365131872970}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &212816092555092974
 SpriteRenderer:
@@ -201,8 +201,8 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4629620492563178}
   - {fileID: 4055151358943464}
+  - {fileID: 4629620492563178}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
@@ -352,10 +352,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02b7deb79ee363342ab057a3eaeed1ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyData: {fileID: 11400000, guid: 77704ee56a943044eaf5335072df1fd1, type: 2}
-  guns:
+  _enemyData: {fileID: 11400000, guid: 77704ee56a943044eaf5335072df1fd1, type: 2}
+  _guns:
   - {fileID: 8783252327254321191}
-  radius: 4
+  _explosion: {fileID: 3646283941115224951, guid: 88b93db81223e6245978c78b0ee61d68, type: 3}
 --- !u!1 &159771122709361294
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,4 +453,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6343e4ab394e784aa6eb411f568eb50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet_prefab: {fileID: -5248060912334887992, guid: 08ce9981bc344f74ba738a660388003a, type: 3}
+  _bulletPrefab: {fileID: -5248060912334887992, guid: 08ce9981bc344f74ba738a660388003a, type: 3}

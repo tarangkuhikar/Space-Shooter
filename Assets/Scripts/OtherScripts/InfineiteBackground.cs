@@ -3,16 +3,16 @@ using UnityEngine.UI;
 
 public class InfineiteBackground : MonoBehaviour
 {
-    RawImage background;
-    [SerializeField]
-    float movespeed;
+    RawImage _backGround;
+
+    Vector2 _moveSpeed = new Vector2(0,0.01f);
     private void Start()
     {
-        background = GetComponent<RawImage>();
+        _backGround = GetComponent<RawImage>();
     }
 
     private void FixedUpdate()
     {
-        background.uvRect = new Rect(background.uvRect.position + new Vector2(0, movespeed) , background.uvRect.size);
+        _backGround.uvRect = new Rect(_backGround.uvRect.position + _moveSpeed, _backGround.uvRect.size);
     }
 }

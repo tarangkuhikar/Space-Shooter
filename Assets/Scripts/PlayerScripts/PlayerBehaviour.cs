@@ -1,39 +1,44 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections;
 public class PlayerBehaviour : MonoBehaviour
 {
     [SerializeField]
     PlayerData playerdata;
 
     [SerializeField]
-    GunScript[] Playergun;
+    GunScript[] _playerGun;
 
     public static event Action PlayerDied;
 
 
     [SerializeField]
-    PlayerBulletUI PlayerBulletUI;
+    PlayerBulletUI _playerBulletUI;
 
     [SerializeField]
-    int playerlives = 3;
+    int _playerLives = 3;
 
-    float t = 0;
+    float _fireRate = 0;
 
-   
+
     private void Start()
     {
-        PlayerBulletUI.BulletSprite(BulletSprite.GetSprite(playerdata.Bullet * 4));
+        _playerBulletUI.BulletSprite(BulletSprite.GetSprite(playerdata.Bullet * 4));
+        LivesScript.LivesChanged(_playerLives);
     }
 
     public void FixedUpdate()
     {
-        t += Time.deltaTime;
-        if (Input.GetButton("Fire1") && t >= playerdata.FireRate)
+        _fireRate += Time.deltaTime;
+        if (Input.GetButton("Fire1") && _fireRate >= playerdata.FireRate)
         {
-            t = 0;
-            foreach (GunScript guns in Playergun)
+            _fireRate = 0;
+            foreach (GunScript guns in _playerGun)
             {
-                guns.Fire(playerdata.BulletSpeed,playerdata.Bullet);
+                if (guns.isActiveAndEnabled)
+                {
+                    guns.Fire(playerdata.BulletSpeed, playerdata.Bullet);
+                }
             }
 
         }
@@ -43,16 +48,29 @@ public class PlayerBehaviour : MonoBehaviour
     {
         if (other.gameObject.CompareTag("EnemyBullet"))
         {
-            playerlives-= 1;
+            _playerLives -= 1;
             other.gameObject.SetActive(false);
-            LivesScript.LivesChanged(playerlives);
+            LivesScript.LivesChanged(_playerLives);
         }
 
-        if (playerlives == 0)
+        if (other.gameObject.CompareTag("Asteroid"))
+        {
+            Destroy(other.gameObject);
+            StartCoroutine(AsteroidHit());
+        }
+
+        if (_playerLives == 0)
         {
             Destroy(gameObject);
             Debug.Log("Game Over");
             PlayerDied();
         }
+    }
+
+    IEnumerator AsteroidHit()
+    {
+        _playerGun[0].gameObject.SetActive(false);
+        yield return new WaitForSeconds(7);
+        _playerGun[0].gameObject.SetActive(true);
     }
 }

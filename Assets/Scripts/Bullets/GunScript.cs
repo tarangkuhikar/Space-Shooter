@@ -3,20 +3,18 @@ using UnityEngine;
 public class GunScript : MonoBehaviour
 {
     [SerializeField]
-    Bullet bullet_prefab;
-    
+    Bullet _bulletPrefab;
 
-
-    public void Fire(float BulletSpeed, int BulletIndex)
+    public void Fire(float bulletSpeed, int bulletIndex)
     {
+        _bulletPrefab = BulletPool.Get();
 
-        bullet_prefab = BulletPool.Get();
+        _bulletPrefab.transform.position = gameObject.transform.position;
+        _bulletPrefab.transform.right = gameObject.transform.up;
 
-        bullet_prefab.transform.position = gameObject.transform.position;
-        bullet_prefab.transform.right = gameObject.transform.up;
+        _bulletPrefab.tag = gameObject.tag;
 
-        bullet_prefab.FireBullet(BulletSpeed,BulletIndex);
+        _bulletPrefab.FireBullet(bulletSpeed, bulletIndex);
 
-        bullet_prefab.tag = gameObject.tag;
     }
 }
