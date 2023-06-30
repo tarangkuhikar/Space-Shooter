@@ -4,7 +4,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
-    EnemySpawner[] enemySpawners;
+    EnemySpawner _enemySpawner;
 
     [SerializeField]
     AsteroidBehaviour _asteroid;
@@ -21,7 +21,8 @@ public class GameManager : MonoBehaviour
         PlayerBehaviour.PlayerDied += PlayerBehaviour_PlayerDied;
 
         yield return new WaitForSeconds(3);
-        StartCoroutine(SpawnEnemies());
+        _enemySpawner.gameObject.SetActive(true);
+
         StartCoroutine(SpawnAsteroids());
 
     }
@@ -31,23 +32,14 @@ public class GameManager : MonoBehaviour
         while (true)
         {
             _asteroidSpawnPoint = Random.Range(0f, Mathf.PI);
-           
+
             if (Random.value < _astereoidSpawnChance)
             {
-                Instantiate(_asteroid,new Vector3(11*Mathf.Cos(_asteroidSpawnPoint),11*Mathf.Sin(_asteroidSpawnPoint),0),Quaternion.identity);
+                Instantiate(_asteroid, new Vector3(11 * Mathf.Cos(_asteroidSpawnPoint), 11 * Mathf.Sin(_asteroidSpawnPoint), 0), Quaternion.identity);
             }
             yield return new WaitForSeconds(5);
         }
     }
-    private IEnumerator SpawnEnemies()
-    {
-        foreach (EnemySpawner e in enemySpawners)
-        {
-            e.gameObject.SetActive(true);
-            yield return new WaitForSecondsRealtime(7);
-        }
-    }
-
 
     private void PlayerBehaviour_PlayerDied()
     {

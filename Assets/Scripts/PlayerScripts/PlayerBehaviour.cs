@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
 using System.Collections;
+using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour
 {
     [SerializeField]
@@ -11,10 +11,6 @@ public class PlayerBehaviour : MonoBehaviour
 
     public static event Action PlayerDied;
 
-
-    [SerializeField]
-    PlayerBulletUI _playerBulletUI;
-
     [SerializeField]
     int _playerLives = 3;
 
@@ -23,7 +19,6 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void Start()
     {
-        _playerBulletUI.BulletSprite(BulletSprite.GetSprite(playerdata.Bullet * 4));
         LivesScript.LivesChanged(_playerLives);
     }
 

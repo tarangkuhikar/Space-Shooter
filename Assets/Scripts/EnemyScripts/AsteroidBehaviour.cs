@@ -14,7 +14,7 @@ public class AsteroidBehaviour : MonoBehaviour
     private void Update()
     {
         gameObject.transform.position += _asteroidData.BulletSpeed * Time.deltaTime * _moveDirection.normalized;
-        gameObject.transform.Rotate(Vector3.forward, _asteroidRotation);
+        gameObject.transform.Rotate(Vector3.forward, _asteroidRotation * Time.deltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

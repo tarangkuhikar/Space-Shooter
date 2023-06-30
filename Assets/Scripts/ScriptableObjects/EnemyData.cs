@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(fileName ="EnemyData")]
+[CreateAssetMenu(fileName = "EnemyData")]
 public class EnemyData : ScriptableObject
 {
     public int BulletSpeed;

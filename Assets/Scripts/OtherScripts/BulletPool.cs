@@ -13,7 +13,7 @@ public class BulletPool : MonoBehaviour
         _bulletPool = new ObjectPool<Bullet>(() => Instantiate(_bulletPrefab),
             bullet => bullet.gameObject.SetActive(true),
             bullet => bullet.gameObject.SetActive(false),
-            bullet => Destroy(gameObject), true, 50, 100); 
+            bullet => Destroy(gameObject), true, 50, 100);
     }
 
     public static Bullet Get()

@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _asteroidData: {fileID: 11400000, guid: 72dcf1ae5cb4aeb4f8f883e10207836a, type: 2}
-  _asteroidRotation: 2.5
+  _asteroidRotation: 25
 --- !u!58 &-8019795963174489414
 CircleCollider2D:
   m_ObjectHideFlags: 0

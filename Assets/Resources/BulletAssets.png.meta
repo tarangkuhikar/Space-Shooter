@@ -5580,10 +5580,10 @@ TextureImporter:
       name: BulletAssets_276
       rect:
         serializedVersion: 2
-        x: 9
-        y: 16
-        width: 16
-        height: 16
+        x: 10
+        y: 19
+        width: 14
+        height: 7
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -5601,10 +5601,10 @@ TextureImporter:
       name: BulletAssets_277
       rect:
         serializedVersion: 2
-        x: 25
-        y: 16
-        width: 16
-        height: 16
+        x: 26
+        y: 19
+        width: 14
+        height: 7
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -5622,10 +5622,10 @@ TextureImporter:
       name: BulletAssets_278
       rect:
         serializedVersion: 2
-        x: 41
-        y: 16
-        width: 16
-        height: 16
+        x: 42
+        y: 19
+        width: 14
+        height: 7
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -5643,10 +5643,10 @@ TextureImporter:
       name: BulletAssets_279
       rect:
         serializedVersion: 2
-        x: 57
-        y: 16
-        width: 16
-        height: 16
+        x: 58
+        y: 19
+        width: 14
+        height: 7
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

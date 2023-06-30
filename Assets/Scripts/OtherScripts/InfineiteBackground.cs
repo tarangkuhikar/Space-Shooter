@@ -5,7 +5,7 @@ public class InfineiteBackground : MonoBehaviour
 {
     RawImage _backGround;
 
-    Vector2 _moveSpeed = new Vector2(0,0.01f);
+    Vector2 _moveSpeed = new Vector2(0, 0.01f);
     private void Start()
     {
         _backGround = GetComponent<RawImage>();
