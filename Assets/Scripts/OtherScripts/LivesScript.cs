@@ -9,7 +9,7 @@ public class LivesScript : MonoBehaviour
     {
         _lives = gameObject.GetComponent<TMPro.TMP_Text>();
     }
-
+ 
     public static void LivesChanged(int playerlives)
     {
         _lives.text = playerlives.ToString();

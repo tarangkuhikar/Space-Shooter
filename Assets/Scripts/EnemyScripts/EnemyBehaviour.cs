@@ -1,6 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
-using System.Collections;
+using System;
 public class EnemyBehaviour : MonoBehaviour
 {
     [SerializeField]
@@ -13,39 +13,33 @@ public class EnemyBehaviour : MonoBehaviour
 
     [SerializeField]
     ParticleSystem _explosion;
-    private void Start()
-    {
-        PlayerBehaviour.PlayerDied += PlayerBehaviour_PlayerDied;
-        
-    }
 
+    public static event Action EnemyKilled;
+
+    Sequence s;
+    /// <summary>
+    /// Sets the path of the enemy while making it look straight ahead.
+    /// </summary>
+    /// <param name="setPath">The points through which the gameObject goes.</param>
     public void SetPath(Vector3[] setPath)
     {
-        
+
         _path = setPath;
-        Sequence s = DOTween.Sequence();
+        s = DOTween.Sequence();
         s.Append(transform.DOPath(_path, 2, PathType.CatmullRom, PathMode.TopDown2D).SetEase(Ease.Linear).SetLookAt(0.02f, null, -gameObject.transform.right));
         s.Append(transform.DORotate(Vector3.up, 1).SetEase(Ease.InOutExpo));
-        
+
     }
-
-    private void PlayerBehaviour_PlayerDied()
-    {
-        StopAllCoroutines();
-    }
-
-
+    /// <summary>
+    /// Fires a bullet in the player's direction.
+    /// </summary>
     public void FirePattern()
     {
 
-        float shoot = Random.value;
-        if (shoot <= 0.5f)
+        foreach (GunScript gun in _guns)
         {
-            foreach (GunScript gun in _guns)
-            {
-                gun.transform.up = GameManager.Player.position - gun.transform.position;
-                gun.Fire(_enemyData.BulletSpeed, _enemyData.BulletIndex);
-            }
+            gun.transform.up = GameManager.Player.position - gun.transform.position;
+            gun.Fire(_enemyData.BulletSpeed, _enemyData.BulletIndex);
         }
     }
 
@@ -55,15 +49,15 @@ public class EnemyBehaviour : MonoBehaviour
         {
             _explosion = Instantiate(_explosion, gameObject.transform.position, Quaternion.identity);
             _explosion.Play();
-            Destroy(gameObject);
+            EnemyKilled?.Invoke();
             ScoreScript.ScoreChanged(_enemyData.Experience);
             collision.gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 
     private void OnDestroy()
     {
-        PlayerBehaviour.PlayerDied -= PlayerBehaviour_PlayerDied;
-        transform.DOKill();
+        s.Kill(false);
     }
 }

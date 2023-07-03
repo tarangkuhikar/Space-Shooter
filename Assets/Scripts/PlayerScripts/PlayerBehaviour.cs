@@ -61,7 +61,9 @@ public class PlayerBehaviour : MonoBehaviour
             PlayerDied();
         }
     }
-
+    /// <summary>
+    /// Disables player's guns when hit by asteroid.
+    /// </summary>
     IEnumerator AsteroidHit()
     {
         _playerGun[0].gameObject.SetActive(false);
