@@ -61,13 +61,17 @@ public class PlayerBehaviour : MonoBehaviour
             PlayerDied();
         }
     }
-    /// <summary>
-    /// Disables player's guns when hit by asteroid.
-    /// </summary>
+    
     IEnumerator AsteroidHit()
     {
         _playerGun[0].gameObject.SetActive(false);
-        yield return new WaitForSeconds(7);
+       for(int i = 0; i < 10; i++)
+        {
+            gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+            yield return new WaitForSeconds(0.35f);
+            gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+            yield return new WaitForSeconds(0.35f);
+        }
         _playerGun[0].gameObject.SetActive(true);
     }
 }

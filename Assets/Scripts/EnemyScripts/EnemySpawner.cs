@@ -8,9 +8,9 @@ public class EnemySpawner : MonoBehaviour
     int _waveSize;
 
     [SerializeField]
-    float _delayBetweenEnemiesS;
+    float _delayBetweenEnemies;
     [SerializeField]
-    float _delayBetweenWavesS;
+    float _delayBetweenWaves;
     [SerializeField]
     Grid _grid;
 
@@ -18,7 +18,7 @@ public class EnemySpawner : MonoBehaviour
     Vector3[] _spawnPoints;
 
     [SerializeField]
-    EnemyBehaviour _enemyPrefab;
+    EnemyBehaviour[] _enemyPrefab;
 
     static int _enemyActive = 0;
 
@@ -26,12 +26,11 @@ public class EnemySpawner : MonoBehaviour
 
     List<Vector3> PathPoints;
 
-    WaitForSeconds _delayBetweenEnemies;
-    WaitForSeconds _delayBetweenWaves;
     [SerializeField]
     float fireChance = 0.3f;
     [SerializeField]
     float _delayBetweenDives = 5f;
+    int _enemyType1Spawned = 0;
 
     public void Start()
     {
@@ -40,8 +39,6 @@ public class EnemySpawner : MonoBehaviour
         PlayerBehaviour.PlayerDied += PlayerBehaviour_PlayerDied;
         _enemyList = new List<EnemyBehaviour>();
         PathPoints = new List<Vector3>();
-        _delayBetweenEnemies = new WaitForSeconds(_delayBetweenEnemiesS);
-        _delayBetweenWaves = new WaitForSeconds(_delayBetweenWavesS);
         StartCoroutine(SpawnEnemies());
     }
 
@@ -49,34 +46,30 @@ public class EnemySpawner : MonoBehaviour
     {
         StopAllCoroutines();
     }
-    /// <summary>
-    /// [deprecated] Spawns Enemies at the spawnPoints in number of waveSize.
-    /// </summary>
     IEnumerator SpawnEnemies()
     {
+        _enemyType1Spawned += 1;
         for (int j = 0; j < _spawnPoints.Length; j++)
         {
             for (int i = 0; i < _waveSize; i++)
             {
 
-                _enemyList.Add(Instantiate(_enemyPrefab, _spawnPoints[j], Quaternion.identity));
+                _enemyList.Add(Instantiate(_enemyPrefab[0], _spawnPoints[j], Quaternion.identity));
                 _enemyActive += 1;
                 PathPoints.Add(_grid.CellToWorld(new Vector3Int(-2 * i + _waveSize + j % 2, -j, 0)));
 
                 _enemyList[_waveSize * j + i].SetPath(PathPoints.ToArray());
 
                 PathPoints.Clear();
-                yield return _delayBetweenEnemies;
+                yield return new WaitForSeconds(_delayBetweenEnemies);
             }
-            yield return _delayBetweenWaves;
+            yield return new WaitForSeconds(_delayBetweenWaves);
         }
-
+        yield return new WaitForSeconds(3);
         StartCoroutine(DiveEnemies());
     }
-    /// <summary>
-    /// Makes enemies dive towards the player.
-    /// </summary>
-    /// <returns></returns>
+
+
     IEnumerator DiveEnemies()
     {
         while (true)
@@ -102,20 +95,53 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    IEnumerator SpawnEnemies2()
+    {
+        yield return new WaitForSeconds(3);
+        for (int i = 0; i < _waveSize; i++)
+        {
+            _enemyList.Add(Instantiate(_enemyPrefab[1], _spawnPoints[1] + 3 * Vector3.up, Quaternion.identity));
+            _enemyActive += 1;
+            _enemyList[i].SetPath(new Vector3[] { _spawnPoints[1] + 3 * Vector3.up, gameObject.transform.up + 20 * Vector3.right });
+            yield return new WaitForSeconds(0.1f);
+            if (Random.value < fireChance && _enemyList[i] != null)
+            {
+                _enemyList[i].FirePattern();
+            }
+            yield return new WaitForSeconds(_delayBetweenEnemies);
+        }
+
+        yield return new WaitForSeconds(1);
+        foreach (EnemyBehaviour enemy in _enemyList)
+        {
+
+            Destroy(enemy.gameObject);
+            EnemyKilled();
+        }
+    }
     void EnemyKilled()
     {
         _enemyActive -= 1;
         if (_enemyActive == 0)
         {
             fireChance += 0.2f;
-            if (_delayBetweenDives >= 2)
+            if (_delayBetweenDives >= 1)
             {
                 _delayBetweenDives -= 0.5f;
             }
 
             StopAllCoroutines();
             _enemyList.Clear();
-            StartCoroutine(SpawnEnemies());
+            if (_enemyType1Spawned == 2)
+            {
+                StartCoroutine(SpawnEnemies2());
+                _enemyType1Spawned = 0;
+            }
+            else
+            {
+                
+                StartCoroutine(SpawnEnemies());
+            }
         }
     }
 

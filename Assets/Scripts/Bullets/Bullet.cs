@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour
     private void OnEnable()
     {
         _bulletImage = gameObject.GetComponent<SpriteRenderer>();
+        gameObject.GetComponent<AudioSource>().Play();
     }
 
     private void Update()

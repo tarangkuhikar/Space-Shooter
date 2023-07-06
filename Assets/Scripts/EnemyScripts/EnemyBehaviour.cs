@@ -13,26 +13,27 @@ public class EnemyBehaviour : MonoBehaviour
 
     [SerializeField]
     ParticleSystem _explosion;
-
     public static event Action EnemyKilled;
 
-    Sequence s;
-    /// <summary>
-    /// Sets the path of the enemy while making it look straight ahead.
-    /// </summary>
-    /// <param name="setPath">The points through which the gameObject goes.</param>
+    Sequence _enemyPath;
+    
     public void SetPath(Vector3[] setPath)
     {
-
         _path = setPath;
-        s = DOTween.Sequence();
-        s.Append(transform.DOPath(_path, 2, PathType.CatmullRom, PathMode.TopDown2D).SetEase(Ease.Linear).SetLookAt(0.02f, null, -gameObject.transform.right));
-        s.Append(transform.DORotate(Vector3.up, 1).SetEase(Ease.InOutExpo));
+        _enemyPath = DOTween.Sequence();
+        _enemyPath.Append(transform.DOPath(_path, 2, PathType.CatmullRom, PathMode.TopDown2D).SetEase(Ease.Linear).SetLookAt(0.02f, null, -gameObject.transform.right));
+        _enemyPath.Append(transform.DORotate(Vector3.up, 1).SetEase(Ease.InOutExpo));
+        _enemyPath.onComplete += IdleMotion; 
 
     }
-    /// <summary>
-    /// Fires a bullet in the player's direction.
-    /// </summary>
+
+    private void IdleMotion()
+    {
+        _enemyPath = DOTween.Sequence();
+        _enemyPath.Append(transform.DOLocalMoveX(transform.position.x+0.3f,2));
+        _enemyPath.SetLoops(-1,LoopType.Yoyo).SetEase(Ease.Linear);
+    }
+
     public void FirePattern()
     {
 
@@ -47,17 +48,14 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if (collision.CompareTag("PlayerBullet"))
         {
+            GameManager.ExplosionAudio();
             _explosion = Instantiate(_explosion, gameObject.transform.position, Quaternion.identity);
             _explosion.Play();
             EnemyKilled?.Invoke();
             ScoreScript.ScoreChanged(_enemyData.Experience);
             collision.gameObject.SetActive(false);
+            _enemyPath.Kill();
             Destroy(gameObject);
         }
-    }
-
-    private void OnDestroy()
-    {
-        s.Kill(false);
     }
 }

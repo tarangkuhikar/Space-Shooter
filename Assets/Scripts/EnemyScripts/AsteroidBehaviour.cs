@@ -21,9 +21,10 @@ public class AsteroidBehaviour : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("PlayerBullet"))
         {
-            Destroy(gameObject);
+            GameManager.ExplosionAudio();
             ScoreScript.ScoreChanged(_asteroidData.Experience);
             collision.gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 

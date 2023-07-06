@@ -5,7 +5,6 @@ public class ScoreScript : MonoBehaviour
 {
     static TMP_Text _scoreText;
     static int _score;
-    int _highScore;
     public void Start()
     {
         _score = 0;
@@ -15,10 +14,13 @@ public class ScoreScript : MonoBehaviour
 
     private void PlayerBehaviour_PlayerDied()
     {
-        if (_score > _highScore)
+
+        if (_score > PlayerPrefs.GetInt("_highScore",0))
         {
             PlayerPrefs.SetInt("_highScore", _score);
         }
+
+        Debug.Log(PlayerPrefs.GetInt("_highScore"));
     }
 
 
