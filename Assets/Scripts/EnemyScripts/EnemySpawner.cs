@@ -111,17 +111,20 @@ public class EnemySpawner : MonoBehaviour
             yield return new WaitForSeconds(_delayBetweenEnemies);
         }
 
-        yield return new WaitForSeconds(1);
-        foreach (EnemyBehaviour enemy in _enemyList)
-        {
+        yield return new WaitForSeconds(2);
+        for (int i = 0; i < _waveSize; i++){
+            if (_enemyList[i] != null)
+            {
 
-            Destroy(enemy.gameObject);
-            EnemyKilled();
+                EnemyKilled();
+                Destroy(_enemyList[i].gameObject);
+            }
         }
     }
     void EnemyKilled()
     {
         _enemyActive -= 1;
+
         if (_enemyActive == 0)
         {
             fireChance += 0.2f;
@@ -139,7 +142,6 @@ public class EnemySpawner : MonoBehaviour
             }
             else
             {
-                
                 StartCoroutine(SpawnEnemies());
             }
         }
