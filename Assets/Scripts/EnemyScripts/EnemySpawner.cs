@@ -39,7 +39,7 @@ public class EnemySpawner : MonoBehaviour
         PlayerBehaviour.PlayerDied += PlayerBehaviour_PlayerDied;
         _enemyList = new List<EnemyBehaviour>();
         PathPoints = new List<Vector3>();
-        StartCoroutine(SpawnEnemies());
+        StartCoroutine(SpawnEnemies2());
     }
 
     private void PlayerBehaviour_PlayerDied()
@@ -58,7 +58,7 @@ public class EnemySpawner : MonoBehaviour
                 _enemyActive += 1;
                 PathPoints.Add(_grid.CellToWorld(new Vector3Int(-2 * i + _waveSize + j % 2, -j, 0)));
 
-                _enemyList[_waveSize * j + i].SetPath(PathPoints.ToArray());
+                _enemyList[_waveSize * j + i].SetPath(PathPoints.ToArray(), 2);
 
                 PathPoints.Clear();
                 yield return new WaitForSeconds(_delayBetweenEnemies);
@@ -80,14 +80,12 @@ public class EnemySpawner : MonoBehaviour
             {
                 if (_enemyList[j * _waveSize + i] != null)
                 {
-                    _enemyList[j * _waveSize + i].SetPath(new Vector3[] { x - 2 * Vector3.down - 1 * Vector3.right, x - 2 * Vector3.down - 1 * Vector3.left, _grid.CellToWorld(new Vector3Int(-2 * i + _waveSize + j % 2, -j, 0)) });
+                    _enemyList[j * _waveSize + i].SetPath(new Vector3[] { x - 2 * Vector3.down - 1 * Vector3.right, x - 2 * Vector3.down - 1 * Vector3.left, _grid.CellToWorld(new Vector3Int(-2 * i + _waveSize + j % 2, -j, 0)) }, 2);
                     yield return new WaitForSeconds(0.2f);
-
-                    if (Random.value < fireChance && _enemyList[j * _waveSize + i] != null)
+                    if (Random.value < fireChance)
                     {
-                        _enemyList[j * _waveSize + i].FirePattern();
+                        StartCoroutine(FireBulletsRandomly(j * _waveSize + i));
                     }
-
                 }
             }
             yield return new WaitForSeconds(_delayBetweenDives);
@@ -95,34 +93,45 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    IEnumerator FireBulletsRandomly(int EnemyIndex)
+    {
+        yield return new WaitForSeconds(Random.Range(1f, 3f));
+        if (_enemyList[EnemyIndex] != null)
+        {
+            _enemyList[EnemyIndex].FirePattern();
+        }
+    }
+
     IEnumerator SpawnEnemies2()
     {
+        float x = Random.Range(-1f, 1f);
+        int y = Random.Range(0, 15);
         yield return new WaitForSeconds(3);
         for (int i = 0; i < _waveSize; i++)
         {
             _enemyList.Add(Instantiate(_enemyPrefab[1], _spawnPoints[1] + 3 * Vector3.up, Quaternion.identity));
             _enemyActive += 1;
-            _enemyList[i].SetPath(new Vector3[] { _spawnPoints[1] + 3 * Vector3.up, gameObject.transform.up + 20 * Vector3.right });
+            _enemyList[i].SetPath(new Vector3[] { _spawnPoints[1] + 3 * Vector3.up, _spawnPoints[1] + y * Vector3.right + (x + 3) * Vector3.up, _spawnPoints[1] + (y + 3 * Mathf.Abs(x)) * Vector3.right - (x - 3) * Vector3.up, 10 * Vector3.right }, 7);
             yield return new WaitForSeconds(0.1f);
-            if (Random.value < fireChance && _enemyList[i] != null)
-            {
-                _enemyList[i].FirePattern();
-            }
-            yield return new WaitForSeconds(_delayBetweenEnemies);
+            StartCoroutine(FireBulletsRandomly(i));
+            yield return new WaitForSeconds(7 * _delayBetweenEnemies);
         }
 
-        yield return new WaitForSeconds(2);
-        for (int i = 0; i < _waveSize; i++){
+        yield return new WaitForSeconds(8);
+        for (int i = 0; i < _waveSize; i++)
+        {
+
             if (_enemyList[i] != null)
             {
 
-                EnemyKilled();
                 Destroy(_enemyList[i].gameObject);
+                EnemyKilled();
             }
         }
     }
     void EnemyKilled()
     {
+
         _enemyActive -= 1;
 
         if (_enemyActive == 0)
@@ -134,6 +143,7 @@ public class EnemySpawner : MonoBehaviour
             }
 
             StopAllCoroutines();
+
             _enemyList.Clear();
             if (_enemyType1Spawned == 2)
             {
