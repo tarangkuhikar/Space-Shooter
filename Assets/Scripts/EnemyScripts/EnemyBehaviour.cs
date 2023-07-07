@@ -9,29 +9,18 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField]
     GunScript[] _guns;
 
-    Vector3[] _path;
-
     [SerializeField]
     ParticleSystem _explosion;
     public static event Action EnemyKilled;
-
     Sequence _enemyPath;
-    
-    public void SetPath(Vector3[] setPath,float pathSpeed)
+    Vector2 _gridPos;
+
+    public void SetPath(Vector3[] setPath, float pathSpeed)
     {
-        _path = setPath;
         _enemyPath = DOTween.Sequence();
-        _enemyPath.Append(transform.DOPath(_path, pathSpeed, PathType.CatmullRom, PathMode.TopDown2D).SetEase(Ease.Linear).SetLookAt(0.02f, null, -gameObject.transform.right));
+        _enemyPath.Append(transform.DOPath(setPath, pathSpeed, PathType.CatmullRom, PathMode.TopDown2D).SetEase(Ease.Linear).SetLookAt(0.02f, null, -gameObject.transform.right));
         _enemyPath.Append(transform.DORotate(Vector3.up, 1).SetEase(Ease.InOutExpo));
-        _enemyPath.onComplete += IdleMotion; 
 
-    }
-
-    private void IdleMotion()
-    {
-        _enemyPath = DOTween.Sequence();   
-        _enemyPath.Append(transform.DOLocalMoveX(transform.position.x+0.5f,2));
-        _enemyPath.SetLoops(-1,LoopType.Yoyo).SetEase(Ease.Linear);
     }
 
     public void FirePattern()
@@ -44,6 +33,20 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
+    public void MoveGridPos(Vector2 GridPos)
+    {
+        _gridPos = GridPos;
+        SetPath(new Vector3[] { gameObject.transform.position,_gridPos},3);
+    }
+
+    public void DiveTowardsPlayer()
+    {
+        Vector3 x = GameManager.Player.position - UnityEngine.Random.Range(-1.5f, 1.5f) * Vector3.right;
+        SetPath(new Vector3[] { x - 2 * Vector3.down - 1 * Vector3.right, x - 2 * Vector3.down - 1 * Vector3.left, _gridPos }, 2);
+    }
+
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("PlayerBullet"))
@@ -55,7 +58,7 @@ public class EnemyBehaviour : MonoBehaviour
             ScoreScript.ScoreChanged(_enemyData.Experience);
             collision.gameObject.SetActive(false);
             _enemyPath.Kill();
-            
+            EnemySpawner._enemyList.Remove(this);
             Destroy(gameObject);
         }
     }
