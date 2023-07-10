@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
         Player = _player;
         PlayerBehaviour.PlayerDied += PlayerBehaviour_PlayerDied;
 
-        _helperText.text = "";
+        /*_helperText.text = "";
         yield return new WaitForSeconds(1);
 
         yield return StartCoroutine(ShowHelperText("Use the A,D or left arrow and right arrow key to move."));
@@ -37,15 +37,13 @@ public class GameManager : MonoBehaviour
         yield return new WaitUntil(() => Input.GetButtonDown("Horizontal"));
         
         yield return new WaitForSeconds(0.5f);
-        _helperText.text = "";
-
 
         yield return StartCoroutine(ShowHelperText("Use the F or Space key to shoot."));
         yield return new WaitUntil(() => Input.GetButtonDown("Fire1"));
 
 
         yield return new WaitForSeconds(0.5f);
-        _helperText.text = "";
+        _helperText.text = "";*/
         yield return new WaitForSeconds(1);
         _enemySpawner.gameObject.SetActive(true);
         yield return new WaitForSeconds(2);

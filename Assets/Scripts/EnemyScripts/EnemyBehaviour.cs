@@ -19,19 +19,21 @@ public class EnemyBehaviour : MonoBehaviour
     
     public void SetPath(Vector3[] setPath,float pathSpeed)
     {
+        _enemyPath.Kill(transform);
         _path = setPath;
         _enemyPath = DOTween.Sequence();
+        _enemyPath.SetTarget(transform);
         _enemyPath.Append(transform.DOPath(_path, pathSpeed, PathType.CatmullRom, PathMode.TopDown2D).SetEase(Ease.Linear).SetLookAt(0.02f, null, -gameObject.transform.right));
         _enemyPath.Append(transform.DORotate(Vector3.up, 1).SetEase(Ease.InOutExpo));
-        _enemyPath.onComplete += IdleMotion; 
+       _enemyPath.onComplete += IdleMotion; 
 
     }
 
     private void IdleMotion()
     {
-        _enemyPath = DOTween.Sequence();   
-        _enemyPath.Append(transform.DOLocalMoveX(transform.position.x+0.5f,2));
-        _enemyPath.SetLoops(-1,LoopType.Yoyo).SetEase(Ease.Linear);
+        _enemyPath = DOTween.Sequence();
+        _enemyPath.Append(transform.DOLocalMoveX(transform.position.x + 0.5f, 2));
+        _enemyPath.SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear);
     }
 
     public void FirePattern()
@@ -54,7 +56,7 @@ public class EnemyBehaviour : MonoBehaviour
             EnemyKilled?.Invoke();
             ScoreScript.ScoreChanged(_enemyData.Experience);
             collision.gameObject.SetActive(false);
-            _enemyPath.Kill();
+            DOTween.Kill(transform);
             
             Destroy(gameObject);
         }
@@ -62,6 +64,6 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void OnDestroy()
     {
-        _enemyPath.Kill();
+        DOTween.Kill(transform);
     }
 }

@@ -39,7 +39,7 @@ public class EnemySpawner : MonoBehaviour
         PlayerBehaviour.PlayerDied += PlayerBehaviour_PlayerDied;
         _enemyList = new List<EnemyBehaviour>();
         PathPoints = new List<Vector3>();
-        StartCoroutine(SpawnEnemies2());
+        StartCoroutine(SpawnEnemies());
     }
 
     private void PlayerBehaviour_PlayerDied()
@@ -155,6 +155,15 @@ public class EnemySpawner : MonoBehaviour
                 StartCoroutine(SpawnEnemies());
             }
         }
+    }
+
+    IEnumerator SpawnEnemies3()
+    {
+        _enemyPrefab[3]=Instantiate(_enemyPrefab[3],_spawnPoints[0],Quaternion.identity);
+        _enemyPrefab[3].SetPath(new Vector3[] { new Vector3(0,2)},4);
+        _enemyPrefab[3].
+
+        yield return null;
     }
 
     private void OnDestroy()
