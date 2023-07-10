@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//Improve this script
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField]
@@ -9,10 +9,9 @@ public class EnemySpawner : MonoBehaviour
 
     [SerializeField]
     float _delayBetweenEnemies;
+
     [SerializeField]
     float _delayBetweenWaves;
-    [SerializeField]
-    Grid _grid;
 
     [SerializeField]
     Vector3[] _spawnPoints;
@@ -20,26 +19,35 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField]
     EnemyBehaviour[] _enemyPrefab;
 
+
+    [SerializeField]
+    float fireChance = 0.3f;
+
+    [SerializeField]
+    float _delayBetweenDives = 5f;
+
+    [SerializeField]
+    Grid _grid;
+
+    int _enemyType1Spawned = 0;
+
     static int _enemyActive = 0;
 
     List<EnemyBehaviour> _enemyList;
 
     List<Vector3> PathPoints;
 
-    [SerializeField]
-    float fireChance = 0.3f;
-    [SerializeField]
-    float _delayBetweenDives = 5f;
-    int _enemyType1Spawned = 0;
-
     public void Start()
     {
         _enemyActive = 0;
+
         EnemyBehaviour.EnemyKilled += EnemyKilled;
         PlayerBehaviour.PlayerDied += PlayerBehaviour_PlayerDied;
+
         _enemyList = new List<EnemyBehaviour>();
         PathPoints = new List<Vector3>();
-        StartCoroutine(SpawnEnemies2());
+
+        StartCoroutine(SpawnEnemies());
     }
 
     private void PlayerBehaviour_PlayerDied()
