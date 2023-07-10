@@ -37,7 +37,6 @@ public class GameManager : MonoBehaviour
         yield return new WaitUntil(() => Input.GetButtonDown("Horizontal"));
         
         yield return new WaitForSeconds(0.5f);
-        _helperText.text = "";
 
 
         yield return StartCoroutine(ShowHelperText("Use the F or Space key to shoot."));

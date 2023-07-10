@@ -92,7 +92,7 @@ public class EnemySpawner : MonoBehaviour
                     yield return new WaitForSeconds(0.2f);
                     if (Random.value < fireChance)
                     {
-                        StartCoroutine(FireBulletsRandomly(j * _waveSize + i));
+                        _enemyList[j * _waveSize + i].Invoke("FirePattern", Random.Range(0.5f, 1.5f));
                     }
                 }
             }
@@ -100,16 +100,6 @@ public class EnemySpawner : MonoBehaviour
 
         }
     }
-
-    IEnumerator FireBulletsRandomly(int EnemyIndex)
-    {
-        yield return new WaitForSeconds(Random.Range(1f, 3f));
-        if (_enemyList[EnemyIndex] != null)
-        {
-            _enemyList[EnemyIndex].FirePattern();
-        }
-    }
-
     IEnumerator SpawnEnemies2()
     {
         float x = Random.Range(-1f, 1f);
@@ -121,7 +111,7 @@ public class EnemySpawner : MonoBehaviour
             _enemyActive += 1;
             _enemyList[i].SetPath(new Vector3[] { _spawnPoints[1] + 3 * Vector3.up, _spawnPoints[1] + y * Vector3.right + (x + 3) * Vector3.up, _spawnPoints[1] + (y + 3 * Mathf.Abs(x)) * Vector3.right - (x - 3) * Vector3.up, 10 * Vector3.right }, 7);
             yield return new WaitForSeconds(0.1f);
-            StartCoroutine(FireBulletsRandomly(i));
+            _enemyList[i].Invoke("FirePattern", Random.Range(0.5f, 1.5f));
             yield return new WaitForSeconds(7 * _delayBetweenEnemies);
         }
 
