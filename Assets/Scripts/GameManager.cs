@@ -23,7 +23,13 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     TMPro.TMP_Text _helperText;
 
-    IEnumerator Start()
+
+    public void Awake()
+    {
+        StartCoroutine(GameStarted());
+    }
+
+    IEnumerator GameStarted()
     {
         _explosionAudio = gameObject.GetComponent<AudioSource>();
         Player = _player;
