@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//Improve this script
+
+
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField]
@@ -92,7 +93,7 @@ public class EnemySpawner : MonoBehaviour
                     yield return new WaitForSeconds(0.2f);
                     if (Random.value < fireChance)
                     {
-                        _enemyList[j * _waveSize + i].Invoke("FirePattern", Random.Range(0.5f, 1.5f));
+                        _enemyList[(j * _waveSize) + i].Invoke("FirePattern", Random.Range(0.5f, 1.5f));
                     }
                 }
             }

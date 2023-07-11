@@ -67,7 +67,6 @@ public class GameManager : MonoBehaviour
 
     }
 
-
     IEnumerator SpawnAsteroids()
     {
         while (true)
