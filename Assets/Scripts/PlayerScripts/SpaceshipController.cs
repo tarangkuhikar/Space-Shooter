@@ -25,7 +25,7 @@ public class SpaceshipController : MonoBehaviour
 
     void FixedUpdate()
     {
-        _spaceShip.AddForce(Input.GetAxis("Horizontal") * _playerData.Speed * Vector3.right);
+        _spaceShip.AddForce(_playerData.Speed * Input.GetAxis("Horizontal") * Vector3.right);
     }
 
     private void LateUpdate()

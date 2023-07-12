@@ -51,10 +51,10 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
         _helperText.text = "";
-        //yield return new WaitForSeconds(1);
-        //_enemySpawner.gameObject.SetActive(true);
-        //yield return new WaitForSeconds(2);
-        //StartCoroutine(SpawnAsteroids());
+        yield return new WaitForSeconds(1);
+        _enemySpawner.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2);
+        StartCoroutine(SpawnAsteroids());
     }
 
 

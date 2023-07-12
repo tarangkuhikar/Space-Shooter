@@ -29,15 +29,16 @@ public class EnemySpawner : MonoBehaviour
 
     [SerializeField]
     Grid _grid;
+    [SerializeField]
+    Level1Boss _Boss;
 
-    int _enemyType1Spawned = 0;
 
     static int _enemyActive = 0;
 
     List<EnemyBehaviour> _enemyList;
 
     List<Vector3> PathPoints;
-
+    int _enemyWaveSpawned = 0;
     public void Start()
     {
         _enemyActive = 0;
@@ -57,7 +58,7 @@ public class EnemySpawner : MonoBehaviour
     }
     IEnumerator SpawnEnemies()
     {
-        _enemyType1Spawned += 1;
+        _enemyWaveSpawned += 1;
         for (int j = 0; j < _spawnPoints.Length; j++)
         {
             for (int i = 0; i < _waveSize; i++)
@@ -76,6 +77,7 @@ public class EnemySpawner : MonoBehaviour
         }
         yield return new WaitForSeconds(3);
         StartCoroutine(DiveEnemies());
+
     }
 
 
@@ -92,7 +94,7 @@ public class EnemySpawner : MonoBehaviour
                     _enemyList[j * _waveSize + i].SetPath(new Vector3[] { x - 2 * Vector3.down - 1 * Vector3.right, x - 2 * Vector3.down - 1 * Vector3.left, _grid.CellToWorld(new Vector3Int(-2 * i + _waveSize + j % 2, -j, 0)) }, 2);
                     yield return new WaitForSeconds(0.2f);
                     if (Random.value < fireChance)
-                    {
+                    {              
                         _enemyList[(j * _waveSize) + i].Invoke("FirePattern", Random.Range(0.5f, 1.5f));
                     }
                     yield return new WaitForSeconds(3 * _delayBetweenEnemies);
@@ -104,6 +106,7 @@ public class EnemySpawner : MonoBehaviour
     }
     IEnumerator SpawnEnemies2()
     {
+        _enemyWaveSpawned += 1;
         float x = Random.Range(-1f, 1f);
         int y = Random.Range(0, 15);
         yield return new WaitForSeconds(3);
@@ -143,16 +146,20 @@ public class EnemySpawner : MonoBehaviour
             StopAllCoroutines();
             _enemyList.Clear();
 
-            if (_enemyType1Spawned == 2)
+            if (_enemyWaveSpawned == 2)
             {
                 StartCoroutine(SpawnEnemies2());
-                _enemyType1Spawned = 0;
+            }
+            else if (_enemyWaveSpawned == 5)
+            {
+                Instantiate(_Boss, _spawnPoints[0], Quaternion.identity);
             }
             else
             {
                 StartCoroutine(SpawnEnemies());
             }
         }
+       
     }
 
     private void OnDestroy()

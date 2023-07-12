@@ -1,6 +1,6 @@
-using UnityEngine;
-using System.Collections;
 using DG.Tweening;
+using System.Collections;
+using UnityEngine;
 
 public class Level1Boss : MonoBehaviour
 {
@@ -19,14 +19,14 @@ public class Level1Boss : MonoBehaviour
     [SerializeField]
     private float _gunRotateSpeed;
 
-    private void OnEnable()
+    public void OnEnable()
     {
-        _guns[0].transform.DORotate(new Vector3(0, 0, -45), _gunRotateSpeed).SetRelative().SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear).SetTarget(transform);
-        _guns[1].transform.DORotate(new Vector3(0, 0, -45), _gunRotateSpeed).SetRelative().SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear).SetTarget(transform);
-        StartCoroutine(StartFiring());
+        transform.DOMoveY(3, 4).SetEase(Ease.Linear).OnComplete(() => StartCoroutine(StartFiring()));
     }
     IEnumerator StartFiring()
     {
+        _guns[0].transform.DORotate(new Vector3(0, 0, -45), _gunRotateSpeed).SetRelative().SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear).SetTarget(transform);
+        _guns[1].transform.DORotate(new Vector3(0, 0, -45), _gunRotateSpeed).SetRelative().SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear).SetTarget(transform);
         yield return new WaitForSeconds(0.5f);
         while (true)
         {
