@@ -95,6 +95,7 @@ public class EnemySpawner : MonoBehaviour
                     {
                         _enemyList[(j * _waveSize) + i].Invoke("FirePattern", Random.Range(0.5f, 1.5f));
                     }
+                    yield return new WaitForSeconds(3 * _delayBetweenEnemies);
                 }
             }
             yield return new WaitForSeconds(_delayBetweenDives);
@@ -117,16 +118,15 @@ public class EnemySpawner : MonoBehaviour
         }
 
         yield return new WaitForSeconds(8);
-        for (int i = 0; i < _waveSize; i++)
+        foreach (EnemyBehaviour e in _enemyList)
         {
-
-            if (_enemyList[i] != null)
+            if (e != null)
             {
-
-                Destroy(_enemyList[i].gameObject);
-                EnemyKilled();
+                Destroy(e.gameObject);
             }
         }
+        _enemyActive = 1;
+        EnemyKilled();
     }
     void EnemyKilled()
     {
@@ -140,10 +140,9 @@ public class EnemySpawner : MonoBehaviour
             {
                 _delayBetweenDives -= 0.5f;
             }
-
             StopAllCoroutines();
-
             _enemyList.Clear();
+
             if (_enemyType1Spawned == 2)
             {
                 StartCoroutine(SpawnEnemies2());

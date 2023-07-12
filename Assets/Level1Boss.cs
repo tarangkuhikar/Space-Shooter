@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 public class Level1Boss : MonoBehaviour
 {
@@ -9,22 +10,29 @@ public class Level1Boss : MonoBehaviour
     float health = 200;
     [SerializeField]
     GunScript[] _guns;
-    private void Start()
+
+    [SerializeField]
+    Transform _leftShield, _rightShield;
+
+    [SerializeField]
+    float _waittime;
+    [SerializeField]
+    private float _gunRotateSpeed;
+
+    private void OnEnable()
     {
-        StartCoroutine(FirePattern());
+        _guns[0].transform.DORotate(new Vector3(0, 0, -45), _gunRotateSpeed).SetRelative().SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear).SetTarget(transform);
+        _guns[1].transform.DORotate(new Vector3(0, 0, -45), _gunRotateSpeed).SetRelative().SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear).SetTarget(transform);
+        StartCoroutine(StartFiring());
     }
-
-    IEnumerator FirePattern()
+    IEnumerator StartFiring()
     {
-        while(true)       
+        yield return new WaitForSeconds(0.5f);
+        while (true)
         {
-            foreach (GunScript gun in _guns)
-            {
-                gun.transform.up = GameManager.Player.position - gun.transform.position;
-                gun.Fire(_enemyData.BulletSpeed, _enemyData.BulletIndex);
-            }
-
-            yield return new WaitForSeconds(1);
+            _guns[0].Fire(_enemyData.BulletSpeed, _enemyData.BulletIndex);
+            _guns[1].Fire(_enemyData.BulletSpeed, _enemyData.BulletIndex);
+            yield return new WaitForSeconds(_waittime);
         }
     }
 
@@ -32,12 +40,15 @@ public class Level1Boss : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("PlayerBullet"))
         {
+
             health -= 10;
             collision.gameObject.SetActive(false);
-        }
-
-        if (health == 100)
-        {
+            if (health == 100)
+            {
+                _leftShield.DORotate(new Vector3(0, 0, 30), 3).SetEase(Ease.InOutSine).SetRelative();
+                _rightShield.DORotate(new Vector3(0, 0, -30), 3).SetEase(Ease.InOutSine).SetRelative();
+                _waittime = 0.5f;
+            }
 
         }
 
@@ -49,6 +60,7 @@ public class Level1Boss : MonoBehaviour
 
     private void OnDestroy()
     {
+        DOTween.Kill(transform);
         StopAllCoroutines();
     }
 }

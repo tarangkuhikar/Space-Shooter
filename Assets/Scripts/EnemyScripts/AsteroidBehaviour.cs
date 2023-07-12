@@ -10,6 +10,7 @@ public class AsteroidBehaviour : MonoBehaviour
     private void Start()
     {
         _moveDirection = GameManager.Player.position - new Vector3(Random.Range(-2, 2), Random.Range(-2, 2), 0) - gameObject.transform.position;
+        Destroy(gameObject, 10);
     }
     private void Update()
     {
