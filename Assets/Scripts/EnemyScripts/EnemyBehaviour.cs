@@ -22,7 +22,7 @@ public class EnemyBehaviour : MonoBehaviour
         _enemyPath.Kill();
         _path = setPath;
         _enemyPath = DOTween.Sequence();
-        _enemyPath.SetTarget(transform);
+        _enemyPath.SetId(transform);
         _enemyPath.Append(transform.DOPath(_path, pathSpeed, PathType.CatmullRom, PathMode.TopDown2D).SetEase(Ease.Linear).SetLookAt(0.02f, null, -gameObject.transform.right));
         _enemyPath.Append(transform.DORotate(Vector3.up, 1).SetEase(Ease.InOutExpo));
         _enemyPath.onComplete += IdleMotion; 
@@ -32,7 +32,7 @@ public class EnemyBehaviour : MonoBehaviour
     private void IdleMotion()
     {
         _enemyPath = DOTween.Sequence();
-        _enemyPath.SetTarget(transform);
+        _enemyPath.SetId(transform);
         _enemyPath.Append(transform.DOLocalMoveX(transform.position.x+0.5f,2));
         _enemyPath.SetLoops(-1,LoopType.Yoyo).SetEase(Ease.Linear);
     }
@@ -57,14 +57,13 @@ public class EnemyBehaviour : MonoBehaviour
             EnemyKilled?.Invoke();
             ScoreScript.ScoreChanged(_enemyData.Experience);
             collision.gameObject.SetActive(false);
-            _enemyPath.Kill(transform);
-            
+            transform.DOKill();
             Destroy(gameObject);
         }
     }
 
     private void OnDestroy()
     {
-        _enemyPath.Kill(transform);
+        transform.DOKill();
     }
 }

@@ -19,10 +19,10 @@ public class GameManager : MonoBehaviour
     float _asteroidSpawnPoint;
 
     static AudioSource _explosionAudio;
-
+    public static int level=1;
     [SerializeField]
     TMPro.TMP_Text _helperText;
-
+    
 
     public void Awake()
     {
@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
     private void PlayerBehaviour_PlayerDied()
     {
         StopAllCoroutines();
-        UnityEngine.SceneManagement.SceneManager.LoadScene(2);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(3);
     }
 
     private void OnDisable()
