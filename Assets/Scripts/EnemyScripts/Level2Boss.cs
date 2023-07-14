@@ -12,11 +12,12 @@ public class Level2Boss : BossScript
     GunScript _guns;
     [SerializeField]
     private float _waittime;
-    bool _isDamageable=false;
+    bool _isDamageable = false;
     public override void StartBossFight()
     {
-       transform.DOMoveY(3, 4).SetEase(Ease.Linear).OnComplete(() => StartCoroutine(StartFiring()));
+        transform.DOMoveY(3, 4).SetEase(Ease.Linear).OnComplete(() => StartCoroutine(StartFiring()));
     }
+
     IEnumerator StartFiring()
     {
 
@@ -32,10 +33,13 @@ public class Level2Boss : BossScript
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("PlayerBullet")&&_isDamageable)
+        if (collision.gameObject.CompareTag("PlayerBullet"))
         {
+            if (_isDamageable)
+            {
 
-            health -= 10;
+                health -= 10;
+            }
             collision.gameObject.SetActive(false);
         }
 
