@@ -7,31 +7,26 @@ public class Level1Boss : BossScript
     [SerializeField]
     EnemyData _enemyData;
 
-    float health = 200;
+    float health = 100;
     [SerializeField]
-    GunScript[] _guns;
-
+    GunScript _guns;
     [SerializeField]
-    Transform _leftShield, _rightShield;
-
-    [SerializeField]
-    float _waittime;
-    [SerializeField]
-    private float _gunRotateSpeed;
-
+    private float _waittime;
+    bool _isDamageable = false;
     public override void StartBossFight()
     {
         transform.DOMoveY(3, 4).SetEase(Ease.Linear).OnComplete(() => StartCoroutine(StartFiring()));
     }
+
     IEnumerator StartFiring()
     {
-        _guns[0].transform.DORotate(new Vector3(0, 0, -45), _gunRotateSpeed).SetRelative().SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear).SetId(transform);
-        _guns[1].transform.DORotate(new Vector3(0, 0, -45), _gunRotateSpeed).SetRelative().SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear).SetId(transform);
+
+        _guns.transform.DORotate(new Vector3(0, 0, 225), 3).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo).SetId(transform);
         yield return new WaitForSeconds(0.5f);
+        _isDamageable = true;
         while (true)
         {
-            _guns[0].Fire(_enemyData.BulletSpeed, _enemyData.BulletIndex);
-            _guns[1].Fire(_enemyData.BulletSpeed, _enemyData.BulletIndex);
+            _guns.Fire(_enemyData.BulletSpeed, _enemyData.BulletIndex);
             yield return new WaitForSeconds(_waittime);
         }
     }
@@ -40,16 +35,12 @@ public class Level1Boss : BossScript
     {
         if (collision.gameObject.CompareTag("PlayerBullet"))
         {
-
-            health -= 10;
-            collision.gameObject.SetActive(false);
-            if (health == 100)
+            if (_isDamageable)
             {
-                _leftShield.DORotate(new Vector3(0, 0, 30), 3).SetEase(Ease.InOutSine).SetRelative();
-                _rightShield.DORotate(new Vector3(0, 0, -30), 3).SetEase(Ease.InOutSine).SetRelative();
-                _waittime = 0.5f;
-            }
 
+                health -= 10;
+            }
+            collision.gameObject.SetActive(false);
         }
 
         if (health == 0)

@@ -19,10 +19,10 @@ public class GameManager : MonoBehaviour
     float _asteroidSpawnPoint;
 
     static AudioSource _explosionAudio;
-    public static int level=1;
+    public static int level = 1;
     [SerializeField]
     TMPro.TMP_Text _helperText;
-    
+
 
     public void Awake()
     {
@@ -34,14 +34,14 @@ public class GameManager : MonoBehaviour
         _explosionAudio = gameObject.GetComponent<AudioSource>();
         Player = _player;
         PlayerBehaviour.PlayerDied += PlayerBehaviour_PlayerDied;
-
+        /*
         _helperText.text = "";
         yield return new WaitForSeconds(1);
 
         yield return StartCoroutine(ShowHelperText("Use the A,D or left arrow and right arrow key to move."));
 
         yield return new WaitUntil(() => Input.GetButton("Horizontal"));
-        
+
         yield return new WaitForSeconds(0.5f);
 
 
@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
         _helperText.text = "";
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1);*/
         _enemySpawner.gameObject.SetActive(true);
         yield return new WaitForSeconds(2);
         StartCoroutine(SpawnAsteroids());
