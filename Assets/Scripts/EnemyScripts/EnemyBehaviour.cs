@@ -52,8 +52,8 @@ public class EnemyBehaviour : MonoBehaviour
         if (collision.CompareTag("PlayerBullet"))
         {
             GameManager.ExplosionAudio();
-            _explosion = Instantiate(_explosion, gameObject.transform.position, Quaternion.identity);
-            _explosion.Play();
+            ParticleSystem e = Instantiate(_explosion, gameObject.transform.position, Quaternion.identity);
+            e.Play();
             EnemyKilled?.Invoke();
             ScoreScript.ScoreChanged(_enemyData.Experience);
             collision.gameObject.SetActive(false);
