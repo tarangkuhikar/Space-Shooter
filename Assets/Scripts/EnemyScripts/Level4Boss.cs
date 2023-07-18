@@ -5,14 +5,9 @@ using UnityEngine;
 
 public class Level4Boss : BossScript
 {
-    int health = 175;
-    [SerializeField]
-    EnemyData _enemyData;
-    [SerializeField]
-    GunScript _guns;
     [SerializeField]
     EnemyBehaviour _underlingEnemy;
-    int _activeEnemies=0;
+    int _activeEnemies = 0;
     List<EnemyBehaviour> _enemyList = new List<EnemyBehaviour>();
     bool _isDamageable = false;
     public override void StartBossFight()
@@ -25,7 +20,7 @@ public class Level4Boss : BossScript
     {
         _activeEnemies--;
 
-        if (_activeEnemies==0)
+        if (_activeEnemies == 0)
         {
             StopAllCoroutines();
             StartCoroutine(StartFiring());
@@ -37,11 +32,11 @@ public class Level4Boss : BossScript
     {
         yield return new WaitForSeconds(2);
         _isDamageable = true;
-        int _prevHealth = health;
-        while (health>_prevHealth-45)
+        int _prevHealth = _health;
+        while (_health > _prevHealth - 45)
         {
-            _guns.transform.up = (GameManager.Player.position - _guns.transform.position).normalized+UnityEngine.Random.Range(-0.5f,0.5f)*Vector3.right;
-            _guns.Fire(_enemyData.BulletSpeed, _enemyData.BulletIndex);
+            _guns[0].transform.up = (GameManager.Player.position - _guns[0].transform.position).normalized + UnityEngine.Random.Range(-0.5f, 0.5f) * Vector3.right;
+            _guns[0].Fire(_enemyData.BulletSpeed, _enemyData.BulletIndex);
             yield return new WaitForSeconds(0.8f);
         }
         _isDamageable = false;
@@ -81,11 +76,10 @@ public class Level4Boss : BossScript
         {
             if (_isDamageable)
             {
-
-                health -= 10;
+                _health -= 10;
             }
             collision.gameObject.SetActive(false);
-            if (health <= 0)
+            if (_health <= 0)
             {
                 Destroy(gameObject);
             }

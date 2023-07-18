@@ -5,10 +5,6 @@ using UnityEngine;
 public class Level3Boss : BossScript
 {
     [SerializeField]
-    GunScript _guns;
-    [SerializeField]
-    EnemyData _enemyData;
-    [SerializeField]
     float _waitTime;
     float health = 150;
     public override void StartBossFight()
@@ -27,7 +23,7 @@ public class Level3Boss : BossScript
     {
         while (true)
         {
-            _guns.Fire(_enemyData.BulletSpeed, _enemyData.BulletIndex);
+            _guns[0].Fire(_enemyData.BulletSpeed, _enemyData.BulletIndex);
             yield return new WaitForSeconds(_waitTime);
         }
     }

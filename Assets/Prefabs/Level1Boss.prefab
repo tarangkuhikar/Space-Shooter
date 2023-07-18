@@ -68,7 +68,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyData: {fileID: 11400000, guid: 9bef0a976084ad441bc68224e188659c, type: 2}
-  _guns: {fileID: 1611633630939293806}
+  _guns:
+  - {fileID: 1611633630939293806}
   _waittime: 0.4
 --- !u!1 &892990345482753000
 GameObject:

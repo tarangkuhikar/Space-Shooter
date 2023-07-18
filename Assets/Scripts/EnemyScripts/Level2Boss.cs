@@ -4,13 +4,7 @@ using UnityEngine;
 
 public class Level2Boss : BossScript
 {
-    [SerializeField]
-    EnemyData _enemyData;
-
-    float health = 200;
-    [SerializeField]
-    GunScript[] _guns;
-
+   
     [SerializeField]
     Transform _leftShield, _rightShield;
 
@@ -41,9 +35,9 @@ public class Level2Boss : BossScript
         if (collision.gameObject.CompareTag("PlayerBullet"))
         {
 
-            health -= 10;
+           _health -= 10;
             collision.gameObject.SetActive(false);
-            if (health == 100)
+            if (_health == 100)
             {
                 _leftShield.DORotate(new Vector3(0, 0, 30), 5).SetEase(Ease.InOutSine).SetRelative();
                 _rightShield.DORotate(new Vector3(0, 0, -30), 5).SetEase(Ease.InOutSine).SetRelative();
@@ -52,16 +46,9 @@ public class Level2Boss : BossScript
 
         }
 
-        if (health == 0)
+        if (_health == 0)
         {
             Destroy(gameObject);
         }
-    }
-
-    private void OnDestroy()
-    {
-        transform.DOKill();
-        StopAllCoroutines();
-        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
     }
 }

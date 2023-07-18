@@ -67,8 +67,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f8c7fb2feb62c545a90c4ea80cd319e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _guns: {fileID: 1611633630939293806}
   _enemyData: {fileID: 11400000, guid: c113052ac9da9d945ac33f6e82898b01, type: 2}
+  _guns:
+  - {fileID: 1611633630939293806}
   _waitTime: 0.8
 --- !u!1 &892990345482753000
 GameObject:

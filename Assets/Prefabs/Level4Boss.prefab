@@ -68,7 +68,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyData: {fileID: 11400000, guid: 90e2ea9c9c956094ea8728c91f72a9d7, type: 2}
-  _guns: {fileID: 1611633630939293806}
+  _guns:
+  - {fileID: 1611633630939293806}
   _underlingEnemy: {fileID: 7130635803711076319, guid: 79fe7da03b43e3741a05ac17f4317028, type: 3}
 --- !u!1 &892990345482753000
 GameObject:

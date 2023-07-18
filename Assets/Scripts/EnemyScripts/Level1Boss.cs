@@ -5,12 +5,6 @@ using UnityEngine;
 public class Level1Boss : BossScript
 {
     [SerializeField]
-    EnemyData _enemyData;
-
-    float health = 100;
-    [SerializeField]
-    GunScript _guns;
-    [SerializeField]
     private float _waittime;
     bool _isDamageable = false;
     public override void StartBossFight()
@@ -21,12 +15,12 @@ public class Level1Boss : BossScript
     IEnumerator StartFiring()
     {
 
-        _guns.transform.DORotate(new Vector3(0, 0, 225), 3).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo).SetId(transform);
+        _guns[0].transform.DORotate(new Vector3(0, 0, 225), 3).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo).SetId(transform);
         yield return new WaitForSeconds(0.5f);
         _isDamageable = true;
         while (true)
         {
-            _guns.Fire(_enemyData.BulletSpeed, _enemyData.BulletIndex);
+            _guns[0].Fire(_enemyData.BulletSpeed, _enemyData.BulletIndex);
             yield return new WaitForSeconds(_waittime);
         }
     }
@@ -38,21 +32,15 @@ public class Level1Boss : BossScript
             if (_isDamageable)
             {
 
-                health -= 10;
+               _health -= 10;
             }
             collision.gameObject.SetActive(false);
         }
 
-        if (health == 0)
+        if (_health == 0)
         {
             Destroy(gameObject);
         }
     }
 
-    private void OnDestroy()
-    {
-        transform.DOKill();
-        StopAllCoroutines();
-        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
-    }
 }

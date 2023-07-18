@@ -67,6 +67,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35e062635ce79b94cb31da79861475d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyData: {fileID: 11400000, guid: 6b73ea8c5f2692c43bafe2c2a0a079af, type: 2}
+  _guns:
+  - {fileID: 1611633630939293806}
 --- !u!1 &892990345482753000
 GameObject:
   m_ObjectHideFlags: 0
