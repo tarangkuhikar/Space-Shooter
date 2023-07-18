@@ -34,24 +34,27 @@ public class GameManager : MonoBehaviour
         _explosionAudio = gameObject.GetComponent<AudioSource>();
         Player = _player;
         PlayerBehaviour.PlayerDied += PlayerBehaviour_PlayerDied;
-        /*
-        _helperText.text = "";
+        if (PlayerPrefs.GetInt("ShowedHelperText",0) == 0)
+        {
+            _helperText.text = "";
+            yield return new WaitForSeconds(1);
+
+            yield return StartCoroutine(ShowHelperText("Use the A,D or left arrow and right arrow key to move."));
+
+            yield return new WaitUntil(() => Input.GetButton("Horizontal"));
+
+            yield return new WaitForSeconds(0.5f);
+
+
+            yield return StartCoroutine(ShowHelperText("Use the F or Space key to shoot."));
+            yield return new WaitUntil(() => Input.GetButton("Fire1"));
+
+
+            yield return new WaitForSeconds(0.5f);
+            _helperText.text = "";
+        }
+        PlayerPrefs.SetInt("ShowedHelperText", 1);
         yield return new WaitForSeconds(1);
-
-        yield return StartCoroutine(ShowHelperText("Use the A,D or left arrow and right arrow key to move."));
-
-        yield return new WaitUntil(() => Input.GetButton("Horizontal"));
-
-        yield return new WaitForSeconds(0.5f);
-
-
-        yield return StartCoroutine(ShowHelperText("Use the F or Space key to shoot."));
-        yield return new WaitUntil(() => Input.GetButton("Fire1"));
-
-
-        yield return new WaitForSeconds(0.5f);
-        _helperText.text = "";
-        yield return new WaitForSeconds(1);*/
         _enemySpawner.gameObject.SetActive(true);
         yield return new WaitForSeconds(2);
         StartCoroutine(SpawnAsteroids());

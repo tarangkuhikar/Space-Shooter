@@ -49,8 +49,7 @@ public class EnemySpawner : MonoBehaviour
         _enemyList = new List<EnemyBehaviour>();
         PathPoints = new List<Vector3>();
 
-        //StartCoroutine(SpawnEnemies());
-        Instantiate(_Boss[GameManager.level - 1], _spawnPoints[0], Quaternion.identity).StartBossFight();
+        StartCoroutine(SpawnEnemies());
     }
 
     private void PlayerBehaviour_PlayerDied()
@@ -167,6 +166,7 @@ public class EnemySpawner : MonoBehaviour
             }
             else if (_enemyWaveSpawned == 5)
             {
+                StartCoroutine(SpawnBoss());
                 Instantiate(_Boss[GameManager.level - 1], _spawnPoints[0], Quaternion.identity).StartBossFight();
             }
             else
@@ -175,6 +175,12 @@ public class EnemySpawner : MonoBehaviour
             }
         }
 
+    }
+
+    IEnumerator SpawnBoss()
+    {
+        yield return new WaitForSeconds(1);
+        Instantiate(_Boss[GameManager.level - 1], _spawnPoints[0], Quaternion.identity).StartBossFight();
     }
 
     private void OnDestroy()

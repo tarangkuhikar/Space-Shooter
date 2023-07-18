@@ -9,6 +9,7 @@ public class ScoreScript : MonoBehaviour
     {
         PlayerBehaviour.PlayerDied += PlayerBehaviour_PlayerDied;
         _scoreText = GetComponent<TMP_Text>();
+        _scoreText.text = PlayerPrefs.GetInt("_highScore", 0).ToString();
     }
 
     private void PlayerBehaviour_PlayerDied()
@@ -18,6 +19,7 @@ public class ScoreScript : MonoBehaviour
         {
             PlayerPrefs.SetInt("_highScore", _score);
         }
+
         _score = 0;
     }
 

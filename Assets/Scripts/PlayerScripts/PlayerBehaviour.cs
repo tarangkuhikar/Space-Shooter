@@ -20,6 +20,7 @@ public class PlayerBehaviour : MonoBehaviour
     private void Start()
     {
         LivesScript.LivesChanged(_playerLives);
+        ScoreScript.ScoreChanged(0);
     }
 
     public void FixedUpdate()

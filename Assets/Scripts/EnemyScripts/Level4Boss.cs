@@ -35,7 +35,7 @@ public class Level4Boss : BossScript
         int _prevHealth = _health;
         while (_health > _prevHealth - 45)
         {
-            _guns[0].transform.up = (GameManager.Player.position - _guns[0].transform.position).normalized + UnityEngine.Random.Range(-0.5f, 0.5f) * Vector3.right;
+            _guns[0].transform.up = (GameManager.Player.position - _guns[0].transform.position).normalized + Random.Range(-0.5f, 0.5f) * Vector3.right;
             _guns[0].Fire(_enemyData.BulletSpeed, _enemyData.BulletIndex);
             yield return new WaitForSeconds(0.8f);
         }

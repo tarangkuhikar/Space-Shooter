@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using DG.Tweening;
+using System.Collections;
+
 public class BossScript : MonoBehaviour
 {
     [SerializeField]
@@ -21,6 +23,11 @@ public class BossScript : MonoBehaviour
         ScoreScript.ScoreChanged(_enemyData.Experience);
         transform.DOKill();
         StopAllCoroutines();
-        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+        StartCoroutine(LoadAfter1Sec());
+    }
+
+    IEnumerator LoadAfter1Sec()
+    {
+        yield return new WaitForSeconds(1);
     }
 }
