@@ -167,7 +167,6 @@ public class EnemySpawner : MonoBehaviour
             else if (_enemyWaveSpawned == 5)
             {
                 StartCoroutine(SpawnBoss());
-                Instantiate(_Boss[GameManager.level - 1], _spawnPoints[0], Quaternion.identity).StartBossFight();
             }
             else
             {

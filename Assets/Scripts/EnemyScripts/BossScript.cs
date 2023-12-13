@@ -10,6 +10,7 @@ public class BossScript : MonoBehaviour
     [SerializeField]
     protected GunScript[] _guns;
     protected int _health;
+
     protected void OnEnable()
     {
         _health = _enemyData.Experience;
@@ -23,11 +24,12 @@ public class BossScript : MonoBehaviour
         ScoreScript.ScoreChanged(_enemyData.Experience);
         transform.DOKill();
         StopAllCoroutines();
-        StartCoroutine(LoadAfter1Sec());
+        Invoke(nameof(LoadAfter1Sec), 1);       
     }
 
-    IEnumerator LoadAfter1Sec()
+    void LoadAfter1Sec()
     {
-        yield return new WaitForSeconds(1);
+        
+        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
     }
 }

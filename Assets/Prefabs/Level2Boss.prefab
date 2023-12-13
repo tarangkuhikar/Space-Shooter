@@ -118,7 +118,7 @@ MonoBehaviour:
   - {fileID: 775162844}
   _leftShield: {fileID: 2762101288283566487}
   _rightShield: {fileID: 6619412661853703315}
-  _waittime: 0.8
+  _waittime: 1
   _gunRotateSpeed: 4
 --- !u!1 &159771122709361294
 GameObject:
@@ -242,7 +242,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: -424299034, guid: a627288de9c4929488877fe03b60ee06, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -369,7 +369,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: -384812976, guid: f1d18912561e8794a87ca3b2fa465648, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -508,7 +508,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: -898255045, guid: f1d18912561e8794a87ca3b2fa465648, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
